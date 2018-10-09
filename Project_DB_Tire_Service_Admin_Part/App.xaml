@@ -1,0 +1,9 @@
+﻿<Application x:Class="Project_DB_Tire_Service_Admin_Part.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Project_DB_Tire_Service_Admin_Part"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

@@ -24,5 +24,22 @@ namespace Project_DB_Tire_Service_Admin_Part
         {
             InitializeComponent();
         }
+
+        private void splitMenu_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = (sender as ListView).SelectedIndex;
+
+            switch (item)
+            {
+                case 0:
+                    {
+                        myFrame.Navigate(new Template.CustomersPage());
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+        }
     }
 }

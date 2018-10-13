@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,29 +7,41 @@ using System.Threading.Tasks;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
-    /// <summary>
-    /// Класс "клиенты"
-    /// </summary>
-    class Customers
+    [Serializable]
+    partial class Customers
     {
-        /// <summary>
-        /// Конструктор объекта "клиент"
-        /// </summary>
-        /// <param name="iD">Код клиента</param>
-        /// <param name="fIO">Фамилия Имя Отчество клиента</param>
-        /// <param name="phoneNumber">Номер телефона</param>
-        /// <param name="email">Личная почта</param>
         public Customers(int iD, string fIO, string phoneNumber, string email)
         {
-            ID = iD;
-            FIO = fIO;
-            PhoneNumber = phoneNumber;
+            IdCustomer = iD;
+            FioC = fIO;
+            Phone = phoneNumber;
             Email = email;
+
+            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
-        
-        public int ID { set; get; }
-        public string FIO { set; get; }
-        public string PhoneNumber { set; get; }
-        public string Email { set; get; }        
+
+        public int IdCustomer { set; get; }
+        public string FioC { set; get; }
+        public string Phone { set; get; }
+        public string Email { set; get; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Customers customers &&
+                   IdCustomer == customers.IdCustomer &&
+                   FioC == customers.FioC &&
+                   Phone == customers.Phone &&
+                   Email == customers.Email;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -1956427436;
+            hashCode = hashCode * -1521134295 + IdCustomer.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FioC);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Phone);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Email);
+            return hashCode;
+        }
     }
 }

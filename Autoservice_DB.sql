@@ -7,14 +7,17 @@ CREATE TABLE Armor
 (
 	id  INTEGER NULL,
 	arrivalDate  DATE NOT NULL,
-	idCustomer  INTEGER NOT NULL
+	idCustomer  INTEGER NOT NULL,
+	idServices  INTEGER NOT NULL,
+	statusA  boolean NOT NULL,
+	dateExection  DATE NOT NULL
 )
 ;
 
 
 
 ALTER TABLE Armor
-	ADD  PRIMARY KEY (id,idCustomer)
+	ADD  PRIMARY KEY (id,idCustomer,idServices)
 ;
 
 
@@ -109,6 +112,11 @@ ALTER TABLE Armor
 ;
 
 
+ALTER TABLE Armor
+	ADD FOREIGN KEY R_13 (idServices) REFERENCES Services(idServices)
+;
+
+
 
 ALTER TABLE Orders
 	ADD FOREIGN KEY R_2 (idMaster) REFERENCES Masters(idMaster)
@@ -123,5 +131,3 @@ ALTER TABLE Orders
 ALTER TABLE Orders
 	ADD FOREIGN KEY R_4 (idCustomer) REFERENCES Customers(idCustomer)
 ;
-
-

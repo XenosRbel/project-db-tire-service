@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project_DB_Tire_Service_Admin_Part.Tables;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         public MastersPage()
         {
             InitializeComponent();
+
+            mastersTable.ItemsSource = new Masters().Load<Masters>();
+            mastersTable.Items.Refresh();
         }
     }
 }

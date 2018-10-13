@@ -9,12 +9,12 @@
       Title="CustomersPage">
 
     <Grid Background="Black" IsHitTestVisible="True">
-        <DataGrid x:Name="customersTable" Margin="0" IsReadOnly="True" IsSynchronizedWithCurrentItem="False">
+        <DataGrid x:Name="customersTable" Margin="0" AutoGenerateColumns="False" PreviewKeyDown="customersTable_PreviewKeyDown">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding idCustomer}" Header="Код клиента" Width="120*"/>
-                <DataGridTextColumn Binding="{Binding fioCustomer}" Header="ФИО клиента" Width="120*"/>
-                <DataGridTextColumn Binding="{Binding phoneCustomer}" Header="Телефон" Width="120*"/>
-                <DataGridTextColumn Binding="{Binding emailCustomer}" Header="Email" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding IdCustomer}" Header="Код клиента" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding FioC}" Header="ФИО клиента" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding Phone}" Header="Телефон" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email" Width="120*"/>
                 <DataGridComboBoxColumn Header="Категория" SelectedItemBinding="{Binding Path=CategoryName}"/>
             </DataGrid.Columns>
         </DataGrid>

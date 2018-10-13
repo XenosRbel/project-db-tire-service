@@ -9,12 +9,12 @@
       Title="MastersPage">
 
     <Grid Background="Black" IsHitTestVisible="True">
-    <DataGrid x:Name="mastersTable" Margin="0" IsSynchronizedWithCurrentItem="False">
+    <DataGrid x:Name="mastersTable" AutoGenerateColumns="False" Margin="0" IsSynchronizedWithCurrentItem="False">
         <DataGrid.Columns>
-            <DataGridTextColumn Binding="{Binding idMaster}" Header="Код мастера" Width="120*"/>
-            <DataGridTextColumn Binding="{Binding fioMaster}" Header="ФИО мастера" Width="120*"/>
-            <DataGridTextColumn Binding="{Binding specializationMaster}" Header="Специализация" Width="120*"/>
-            <DataGridTextColumn Binding="{Binding phoneMaster}" Header="Телефон" Width="120*"/>
+            <DataGridTextColumn Binding="{Binding ID}" Header="Код мастера" Width="120*"/>
+            <DataGridTextColumn Binding="{Binding FIO}" Header="ФИО мастера" Width="120*"/>
+            <DataGridTextColumn Binding="{Binding Specialization}" Header="Специализация" Width="120*"/>
+            <DataGridTextColumn Binding="{Binding Phone}" Header="Телефон" Width="120*"/>
         </DataGrid.Columns>
     </DataGrid>
     </Grid>

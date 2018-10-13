@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project_DB_Tire_Service_Admin_Part.Tables;
+using Project_DB_Tire_Service_Admin_Part.Template;
 
 namespace Project_DB_Tire_Service_Admin_Part
 {
@@ -32,6 +34,31 @@ namespace Project_DB_Tire_Service_Admin_Part
             switch (item)
             {
                 case 0:
+                    {
+                        myFrame.Navigate(new Template.CustomersPage());                        
+                        break;
+                    }
+                case 1:
+                    {
+                        myFrame.Navigate(new Template.MastersPage());
+                        break;
+                    }
+                case 2:
+                    {
+                        myFrame.Navigate(new Template.CustomersPage());
+                        break;
+                    }
+                case 3:
+                    {
+                        myFrame.Navigate(new Template.CustomersPage());
+                        break;
+                    }
+                case 4:
+                    {
+                        myFrame.Navigate(new Template.CustomersPage());
+                        break;
+                    }
+                case 5:
                     {
                         myFrame.Navigate(new Template.CustomersPage());
                         break;

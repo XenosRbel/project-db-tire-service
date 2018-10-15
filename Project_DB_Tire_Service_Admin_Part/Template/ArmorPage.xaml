@@ -9,12 +9,14 @@
       Title="ArmorPage">
 
     <Grid Background="Black" IsHitTestVisible="True">
-        <DataGrid x:Name="armorTable" Margin="0" IsReadOnly="True" IsSynchronizedWithCurrentItem="False">
+        <DataGrid x:Name="armorTable" AutoGenerateColumns="False" Margin="0" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding idCustomer}" Header="Код клиента" Width="120*"/>
-                <DataGridTextColumn Binding="{Binding fioCustomer}" Header="ФИО клиента" Width="120*"/>
-                <DataGridTextColumn Binding="{Binding phoneCustomer}" Header="Телефон" Width="120*"/>
-                <DataGridTextColumn Binding="{Binding emailCustomer}" Header="Email" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding ID}" Header="Код брони" Width="80*"/>
+                <DataGridTextColumn Binding="{Binding IdCustomers}" Header="ФИО клиента" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding IDService}" Header="Услуга" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding ArrivalDate}" Header="Дата приезда на СТО" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding DateExecution}" Header="Дата выполнения" Width="120*"/>
+                <DataGridTextColumn Binding="{Binding StatusA}" Header="Статус заказа" Width="120*"/>
                 <DataGridComboBoxColumn Header="Категория" SelectedItemBinding="{Binding Path=CategoryName}"/>
             </DataGrid.Columns>
         </DataGrid>

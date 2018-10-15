@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project_DB_Tire_Service_Admin_Part.Tables;
 
 namespace Project_DB_Tire_Service_Admin_Part.Template
 {
@@ -20,9 +21,15 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
     /// </summary>
     public partial class ArmorPage : Page
     {
+        /// <summary>
+        /// Окно бронирования
+        /// </summary>
         public ArmorPage()
         {
             InitializeComponent();
+
+            armorTable.ItemsSource = new Armor().Load<Armor>();
+            armorTable.Items.Refresh();
         }
     }
 }

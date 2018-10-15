@@ -9,7 +9,7 @@
       Title="MastersPage">
 
     <Grid Background="Black" IsHitTestVisible="True">
-    <DataGrid x:Name="mastersTable" AutoGenerateColumns="False" Margin="0" IsSynchronizedWithCurrentItem="False">
+    <DataGrid x:Name="mastersTable" AutoGenerateColumns="False" Margin="0">
         <DataGrid.Columns>
             <DataGridTextColumn Binding="{Binding ID}" Header="Код мастера" Width="120*"/>
             <DataGridTextColumn Binding="{Binding FIO}" Header="ФИО мастера" Width="120*"/>

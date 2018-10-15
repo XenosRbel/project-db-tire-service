@@ -1,5 +1,4 @@
-﻿using Project_DB_Tire_Service_Admin_Part.Tables;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,23 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Project_DB_Tire_Service_Admin_Part.Tables;
 
 namespace Project_DB_Tire_Service_Admin_Part.Template
 {
     /// <summary>
-    /// Логика взаимодействия для MastersPage.xaml
+    /// Логика взаимодействия для ServicesPage.xaml
     /// </summary>
-    public partial class MastersPage : Page
+    public partial class ServicesPage : Page
     {
         /// <summary>
-        /// Окно мастеов
+        /// Услуги
         /// </summary>
-        public MastersPage()
+        public ServicesPage()
         {
             InitializeComponent();
 
-            mastersTable.ItemsSource = new Masters().Load<Masters>();
-            mastersTable.Items.Refresh();
+            servicesTable.ItemsSource = new Services().Load<Services>();
+            servicesTable.Items.Refresh();
         }
     }
 }

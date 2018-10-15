@@ -10,6 +10,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Armor
     {
+        [NonSerialized]
         private MySqlConnection connection;
 
         public Armor()
@@ -33,13 +34,15 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 while (reader.Read())
                 {
-                    T obj = new T();
-                    obj.ID = reader.GetInt32(0);
-                    obj.ArrivalDate = reader.GetDateTime(1);
-                    obj.IdCustomers = reader.GetInt32(2);
-                    obj.IDService = reader.GetInt32(3);
-                    obj.StatusA = (ArmorStatus)reader.GetByte(4);
-                    obj.DateExecution = reader.GetDateTime(5);
+                    T obj = new T
+                    {
+                        ID = reader.GetInt32(0),
+                        ArrivalDate = reader.GetDateTime(1),
+                        IdCustomers = reader.GetInt32(2),
+                        IDService = reader.GetInt32(3),
+                        StatusA = (ArmorStatus)reader.GetByte(4),
+                        DateExecution = reader.GetDateTime(5)
+                    };
 
                     data.Add(obj);
                 }
@@ -163,7 +166,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                     writer.Write(this.DateExecution.ToBinary());
                 }
                 return m.ToArray();
-            }
+            }            
         }
 
         public static T Desserialize<T>(byte[] data) where T : Armor, new()
@@ -181,6 +184,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                     obj.StatusA = (ArmorStatus)reader.ReadByte();
                     obj.DateExecution = DateTime.FromBinary(reader.ReadInt64());
                 }
+                stream.Dispose();
             }
             return obj;
         }

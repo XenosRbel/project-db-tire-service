@@ -21,6 +21,9 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
     /// </summary>
     public partial class CustomersPage : Page
     {
+        /// <summary>
+        /// Окно клиентов
+        /// </summary>
         public CustomersPage()
         {
             InitializeComponent();

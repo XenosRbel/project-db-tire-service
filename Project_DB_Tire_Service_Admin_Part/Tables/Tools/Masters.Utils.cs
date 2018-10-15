@@ -12,6 +12,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Masters
     {
+        [NonSerialized]
         private MySqlConnection connection;
 
         public Masters()

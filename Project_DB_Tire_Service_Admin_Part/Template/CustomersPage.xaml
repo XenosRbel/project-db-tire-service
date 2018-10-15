@@ -15,7 +15,6 @@
                 <DataGridTextColumn Binding="{Binding FioC}" Header="ФИО клиента" Width="120*"/>
                 <DataGridTextColumn Binding="{Binding Phone}" Header="Телефон" Width="120*"/>
                 <DataGridTextColumn Binding="{Binding Email}" Header="Email" Width="120*"/>
-                <DataGridComboBoxColumn Header="Категория" SelectedItemBinding="{Binding Path=CategoryName}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

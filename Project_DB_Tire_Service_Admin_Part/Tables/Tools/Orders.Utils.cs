@@ -10,6 +10,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Orders
     {
+        [NonSerialized]
         private MySqlConnection connection;
 
         public Orders()

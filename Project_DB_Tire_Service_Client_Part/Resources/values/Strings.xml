@@ -3,4 +3,10 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+  <string name="auth_titel">Подтвердите номер телефона</string>
+  <string name="auth_title_description">Приложение будет использовать Ваш номер телефона для авторизации.</string>
+  <string name="auth_phone_inp_hint">Ваш номер телефона</string>
+  <string name="auth_additional_description">Приложение будет ипользовать Ваш номер телефона для упрощении работы с заказами услуг, а также будет использоваться для авторизации в приложении</string>
+  <string name="auth_btn_continue">Далее ></string>
 </resources>

@@ -26,7 +26,8 @@
 		<EditText
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textColor="#ff059bff" />
+			android:textColor="#ff059bff"
+			android:id="@+id/edit_auth_contry" />
 		<EditText
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"

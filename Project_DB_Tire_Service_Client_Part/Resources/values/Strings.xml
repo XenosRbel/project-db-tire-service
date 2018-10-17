@@ -9,4 +9,17 @@
   <string name="auth_phone_inp_hint">Ваш номер телефона</string>
   <string name="auth_additional_description">Приложение будет ипользовать Ваш номер телефона для упрощении работы с заказами услуг, а также будет использоваться для авторизации в приложении</string>
   <string name="auth_btn_continue">Далее ></string>
+
+  <string name="clarifi_question_exit">Остановить настройку?</string>
+  <string name="clarifi_question_description_exit">Вы не сможете пользоваться программой без авторизации.</string>
+  <string name="exit_name_btn">Выйти</string>
+  <string name="complete_setup">Завершить настройку</string>
+
+  <string name="secure_code">Код подтвеждения</string>
+  <string name="secure_code_description">Введите код подтверждения, отправленный на номер</string>
+  <string name="secure_code_complete">Номер телефона подтвержден</string>
+  <string name="secure_code_error_connection">Не удалось отправить запрос. Проверьте подключение к Интернету и повторите попытку.</string>
+  <string name="secure_code_error_input">Неверный код подтверждения.</string>
+  <string name="secure_code_question">Не получили код?</string>
+  <string name="secure_code_tip">Подождите</string>
 </resources>

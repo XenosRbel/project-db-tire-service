@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:padding="15dp">
+	<TextView
+		android:text="@string/clarifi_question_exit"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginBottom="15dp" />
+	<TextView
+		android:text="@string/clarifi_question_description_exit"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="15dp" />
+	<GridLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:columnCount="2"
+		android:layout_gravity="center"
+		android:orientation="horizontal">
+		<Button
+			android:text="@string/exit_name_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:id="@+id/btn_exit_app"
+			android:layout_column="0"
+			android:gravity="fill"
+			android:textAlignment="center" />
+		<Button
+			android:text="@string/complete_setup"
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:id="@+id/btn_complete"
+			android:layout_column="1"
+			android:layout_gravity="fill"
+			android:textAlignment="center" />
+	</GridLayout>
+</LinearLayout>

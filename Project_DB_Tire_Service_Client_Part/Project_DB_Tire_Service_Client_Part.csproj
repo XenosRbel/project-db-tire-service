@@ -74,7 +74,6 @@
     <Compile Include="Activities\AuthCountryFragment.cs" />
     <Compile Include="Activities\AuthFragment.cs" />
     <Compile Include="Activities\ExitDialogFragment.cs" />
-    <Compile Include="Adapters\CountryAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneAuth\FireBasePhoneAuth.cs" />
     <Compile Include="PhoneAuth\IPhoneAuthCallbacks.cs" />
@@ -151,6 +150,9 @@
     <AndroidResource Include="Resources\layout\dialog_fragment_exit_app.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Adapters\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

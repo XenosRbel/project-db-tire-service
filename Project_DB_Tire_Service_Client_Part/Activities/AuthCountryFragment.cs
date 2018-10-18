@@ -12,6 +12,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.Util;
+using Project_DB_Tire_Service_Client_Part.Utils;
 
 namespace Project_DB_Tire_Service_Client_Part.Activities
 {
@@ -35,7 +36,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             toolbar.NavigationOnClick += Toolbar_NavigationOnClick;
 
             var listOfCountry = _view.FindViewById<ListViewCompat>(Resource.Id.list_view_country);
-            string[] countryArray = GetCountryData();
+            string[] countryArray = new CountryData(this.Activity).GetCountryData();
 
             listOfCountry.Adapter = new ArrayAdapter<string>(_view.Context, Resource.Layout.item_country, countryArray);
 
@@ -47,19 +48,6 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
                 this.FragmentManager.PopBackStack();
 
-        }
-
-        private string[] GetCountryData()
-        {
-            var countryMatrix = Resources.GetStringArray(Resource.Array.countryCodes).Select(x => x.Split(' ')).ToArray();
-            var countryArray = new string[countryMatrix.Length];
-
-            for (int i = 0; i < countryMatrix.Length; i++)
-            {
-                countryArray[i] = ($"{new Locale("", countryMatrix[i][0]).DisplayCountry}\t{countryMatrix[i][1]}");
-            }
-
-            return countryArray;
         }
     }
 }

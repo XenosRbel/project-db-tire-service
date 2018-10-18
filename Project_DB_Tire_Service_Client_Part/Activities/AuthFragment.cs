@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Text.RegularExpressions;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -11,7 +11,9 @@ using Android.Telephony;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Java.Util;
 using Project_DB_Tire_Service_Client_Part.PhoneAuth;
+using Project_DB_Tire_Service_Client_Part.Utils;
 
 namespace Project_DB_Tire_Service_Client_Part.Activities
 {
@@ -45,10 +47,19 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
             var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
 
-            TelephonyManager manager = (TelephonyManager)this.Activity.GetSystemService(Context.TelephonyService);
-            var countryCode = manager.SimCountryIso;
+            string currentCountry, countryCode;
+            GetCurrentCountryCode(out currentCountry, out countryCode);
+
+            editCountry.Text = $"{currentCountry}\t(+{countryCode})";
 
             return _view;
+        }
+
+        private void GetCurrentCountryCode(out string currentCountry, out string countryCode)
+        {
+            TelephonyManager manager = (TelephonyManager)this.Activity.GetSystemService(Context.TelephonyService);
+            currentCountry = new Locale("", manager.SimCountryIso).DisplayCountry;
+            countryCode = new CountryData(this.Activity).GetCountryDictonary()[currentCountry];
         }
 
         private void BtnContinue_Click(object sender, EventArgs e)
@@ -60,7 +71,9 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             var editPhone = _view.FindViewById<EditText>(Resource.Id.edit_auth_phone);
             var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
 
-            phoneAuth.StartPhoneNumberVerification(editCountry.Text + editPhone.Text);
+            Regex regex = new Regex(@"\+\d*");
+
+            phoneAuth.StartPhoneNumberVerification(regex.Match(editCountry.Text).Value + editPhone.Text);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)

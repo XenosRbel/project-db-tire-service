@@ -29,27 +29,12 @@ namespace Project_DB_Tire_Service_Client_Part
             SetContentView(Resource.Layout.activity_main);
 
             var ft = this.SupportFragmentManager.BeginTransaction();
-            ft.Replace(Resource.Id.parent_fragment_container, new AuthFragment()).AddToBackStack("fragment_auth");
-            ft.Commit();
-
-            //var authFragment = new AuthFragment();
-            //SupportFragmentManager.BeginTransaction().Replace(Resource.Id.app_reg_frame, authFragment).Commit();
+            ft.Replace(Resource.Id.parent_fragment_container, new AuthFragment())
+                .AddToBackStack("fragment_auth")
+                .Commit();
 
             //BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_menu);
             //navigation.SetOnNavigationItemSelectedListener(this);
-
-            TelephonyManager tm = (TelephonyManager)GetSystemService(Context.TelephonyService);
-            var ss = tm.SimCountryIso;
-            Locale loc = new Locale("", ss);
-            var a = loc.DisplayCountry;
-            string countryCode = tm.GetSimState(1).ToString();
-
-            //phoneAuth = new FireBasePhoneAuth();
-            //phoneAuth.Activity = this;
-            //phoneAuth.InitFirebaseAuth();
-
-            //var countryEdit = FindViewById<EditText>(Resource.Id.edit_auth_contry);
-            //countryEdit.Click += CountryEdit_Click;
         }
         public override void OnBackPressed()
         {

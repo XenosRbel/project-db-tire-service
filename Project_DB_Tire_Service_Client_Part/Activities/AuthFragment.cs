@@ -31,13 +31,14 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
         private void CountryEdit_Click(object sender, System.EventArgs e)
         {
             var transaction = FragmentManager.BeginTransaction();
-            transaction.Replace(Resource.Id.parent_fragment_container, new AuthCountryFragment()).AddToBackStack("fragment_country").Commit();
+            transaction.Replace(Resource.Id.parent_fragment_container, new AuthCountryFragment())
+                .AddToBackStack("fragment_country")
+                .Commit();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             _view = inflater.Inflate(Resource.Layout.AuthFragment, container, false);
-
 
             var countryEdit = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
             countryEdit.Click += CountryEdit_Click;
@@ -58,8 +59,10 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
         private void GetCurrentCountryCode(out string currentCountry, out string countryCode)
         {
             TelephonyManager manager = (TelephonyManager)this.Activity.GetSystemService(Context.TelephonyService);
-            currentCountry = new Locale("", manager.SimCountryIso).DisplayCountry;
-            countryCode = new CountryData(this.Activity).GetCountryDictonary()[currentCountry];
+            currentCountry = new Locale("", manager.SimCountryIso)
+                .DisplayCountry;
+            countryCode = new CountryData(this.Activity)
+                .GetCountryDictonary()[currentCountry];
         }
 
         private void BtnContinue_Click(object sender, EventArgs e)
@@ -73,12 +76,25 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
             Regex regex = new Regex(@"\+\d*");
 
-            phoneAuth.StartPhoneNumberVerification(regex.Match(editCountry.Text).Value + editPhone.Text);
+            string phoneNumber = regex.Match(editCountry.Text).Value + editPhone.Text;
+
+            phoneAuth.StartPhoneNumberVerification(phoneNumber);
+
+            new AppPreferences(this._view.Context).ClearAccessKey();
         }
 
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        public override void OnResume()
         {
-            base.OnViewCreated(view, savedInstanceState);
+            base.OnResume();
+
+            var preferences = new AppPreferences(this._view.Context);
+            var data = preferences.GetAccessKey(PreferenceField.PREFERENCE_COUNTNTRY_DATA).Split('\t');
+
+            if (!string.IsNullOrEmpty(data[0]))
+            {
+                var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
+                editCountry.Text = $"{data[0]}\t(+{data[1]})";
+            }
         }
     }
 }

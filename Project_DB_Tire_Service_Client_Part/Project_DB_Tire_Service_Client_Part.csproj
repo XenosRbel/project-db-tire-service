@@ -80,6 +80,7 @@
     <Compile Include="PhoneAuth\PhoneAuthCallbacks.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\AppPreferences.cs" />
     <Compile Include="Utils\CountryData.cs" />
   </ItemGroup>
   <ItemGroup>

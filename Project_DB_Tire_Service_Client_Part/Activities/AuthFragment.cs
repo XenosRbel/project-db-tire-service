@@ -17,23 +17,19 @@ using Project_DB_Tire_Service_Client_Part.Utils;
 
 namespace Project_DB_Tire_Service_Client_Part.Activities
 {
-    public class AuthFragment : Android.Support.V4.App.Fragment
+    class AuthFragment : Android.Support.V4.App.Fragment
     {
         View _view;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Create your fragment here
-         }
+        }
 
         private void CountryEdit_Click(object sender, System.EventArgs e)
         {
-            var transaction = FragmentManager.BeginTransaction();
-            transaction.Replace(Resource.Id.parent_fragment_container, new AuthCountryFragment())
-                .AddToBackStack("fragment_country")
-                .Commit();
+            new FragmentUtil(this.Activity, this.FragmentManager)
+                .CreateLoadView(Resource.Id.parent_fragment_container, new AuthCountryFragment());
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -52,35 +48,8 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             GetCurrentCountryCode(out currentCountry, out countryCode);
 
             editCountry.Text = $"{currentCountry}\t(+{countryCode})";
-
+            
             return _view;
-        }
-
-        private void GetCurrentCountryCode(out string currentCountry, out string countryCode)
-        {
-            TelephonyManager manager = (TelephonyManager)this.Activity.GetSystemService(Context.TelephonyService);
-            currentCountry = new Locale("", manager.SimCountryIso)
-                .DisplayCountry;
-            countryCode = new CountryData(this.Activity)
-                .GetCountryDictonary()[currentCountry];
-        }
-
-        private void BtnContinue_Click(object sender, EventArgs e)
-        {
-            var phoneAuth = new FireBasePhoneAuth();
-            phoneAuth.Activity = this.Activity;
-            phoneAuth.InitFirebaseAuth();
-
-            var editPhone = _view.FindViewById<EditText>(Resource.Id.edit_auth_phone);
-            var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
-
-            Regex regex = new Regex(@"\+\d*");
-
-            string phoneNumber = regex.Match(editCountry.Text).Value + editPhone.Text;
-
-            phoneAuth.StartPhoneNumberVerification(phoneNumber);
-
-            new AppPreferences(this._view.Context).ClearAccessKey();
         }
 
         public override void OnResume()
@@ -95,6 +64,36 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
                 var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
                 editCountry.Text = $"{data[0]}\t(+{data[1]})";
             }
+        }
+
+        private void GetCurrentCountryCode(out string currentCountry, out string countryCode)
+        {
+            TelephonyManager manager = (TelephonyManager)this.Activity.GetSystemService(Context.TelephonyService);
+            currentCountry = new Locale("", manager.SimCountryIso)
+                .DisplayCountry;
+            countryCode = new CountryData(this.Activity)
+                .GetCountryDictonary()[currentCountry];
+        }
+
+        private void BtnContinue_Click(object sender, EventArgs e)
+        {            
+            var editPhone = _view.FindViewById<EditText>(Resource.Id.edit_auth_phone);
+            var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
+
+            Regex regex = new Regex(@"\+\d*");
+
+            string phoneNumber = regex.Match(editCountry.Text).Value + editPhone.Text;
+                     
+            new AppPreferences(this._view.Context).ClearAccessKey();
+
+            var fragment = new AuthConfirmCodeFragment();
+            Bundle bundle = new Bundle();
+            bundle.PutString("phoneNumber", phoneNumber);
+
+            fragment.Arguments = bundle;
+
+            new FragmentUtil(this.Activity, this.FragmentManager)
+                .CreateLoadView(Resource.Id.parent_fragment_container, fragment);
         }
     }
 }

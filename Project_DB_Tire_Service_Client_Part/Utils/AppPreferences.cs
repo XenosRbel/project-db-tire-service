@@ -20,6 +20,7 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
         private Context mContext;
 
         private String PREFERENCE_COUNTNTRY_DATA = "PREFERENCE_COUNTNTRY_DATA";
+        private String PREFERENCE_AUTH_SSUCCESS = "PREFERENCE_AUTH_SSUCCESS";
 
         public AppPreferences(Context context)
         {
@@ -33,9 +34,17 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
             switch (field)
             {
                 case PreferenceField.PREFERENCE_COUNTNTRY_DATA:
-                    mPrefsEditor.PutString(PREFERENCE_COUNTNTRY_DATA, value);
-                    mPrefsEditor.Commit();
-                    break;
+                    {
+                        mPrefsEditor.PutString(PREFERENCE_COUNTNTRY_DATA, value);
+                        mPrefsEditor.Commit();
+                        break;
+                    }
+                case PreferenceField.PREFERENCE_AUTH_SSUCCESS:
+                    {
+                        mPrefsEditor.PutString(PREFERENCE_AUTH_SSUCCESS, value);
+                        mPrefsEditor.Commit();
+                        break;
+                    }
                 default:
                     break;
             }
@@ -46,7 +55,13 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
             switch (field)
             {
                 case PreferenceField.PREFERENCE_COUNTNTRY_DATA:
-                    return mSharedPrefs.GetString(PREFERENCE_COUNTNTRY_DATA, "");
+                    {
+                        return mSharedPrefs.GetString(PREFERENCE_COUNTNTRY_DATA, "");
+                    }
+                case PreferenceField.PREFERENCE_AUTH_SSUCCESS:
+                    {
+                        return mSharedPrefs.GetString(PREFERENCE_AUTH_SSUCCESS, "false");
+                    }
                 default:
                     return null;
             }
@@ -60,6 +75,7 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
 
     public enum PreferenceField
     {
-        PREFERENCE_COUNTNTRY_DATA
+        PREFERENCE_COUNTNTRY_DATA,
+        PREFERENCE_AUTH_SSUCCESS
     }
 }

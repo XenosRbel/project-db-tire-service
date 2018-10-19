@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<LinearLayout
+		android:orientation="vertical"
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/linearLayout1"
+		android:padding="40dp">
+		<TextView
+			android:text="@string/secure_code"
+			android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="match_parent"
+			android:textColor="#ff059bff"
+			android:layout_height="wrap_content"/>
+		<TextView
+			android:text="@string/secure_code_description"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:textColor="#ff456072"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="35dp" />
+		<EditText
+			android:inputType="numberSigned"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/edit_auth_code_secure" />
+	</LinearLayout>
+	<Button
+		android:text="@string/auth_btn_continue"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:id="@+id/button_auth_codecontinue"
+		android:background="#ff059bff"
+		android:textColor="#ffcde9fb"
+		android:textAlignment="textEnd"
+		android:paddingRight="45dp"/>
+</RelativeLayout>

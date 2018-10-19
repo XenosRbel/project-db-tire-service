@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -18,8 +19,13 @@ using Java.Util.Concurrent;
 
 namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
 {
+    [Serializable]
     class FireBasePhoneAuth : AppCompatActivity, IOnCompleteListener
     {
+        public delegate void MethodContainer();
+        public event MethodContainer OnAuthSuccessful;
+        public event MethodContainer OnAuthFailed;
+
         public FireBasePhoneAuth()
         {
             MCallbacks = new PhoneAuthCallbacks();
@@ -85,10 +91,13 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
             if (task.IsSuccessful)
             {
                 FirebaseUser user = Auth.CurrentUser;
+
+                OnAuthSuccessful?.Invoke();
                 Toast.MakeText(Activity, "Authentication Successful.", ToastLength.Short).Show();
             }
             else
             {
+                OnAuthFailed?.Invoke();
                 Toast.MakeText(Activity, "Authentication failed.", ToastLength.Short).Show();
             }
         }

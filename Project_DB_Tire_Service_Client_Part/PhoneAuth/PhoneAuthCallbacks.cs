@@ -36,7 +36,7 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
             if (exception is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
                 // [START_EXCLUDE]
-                mPhoneNumberField.Text = ("Invalid phone number.");
+                TAG = ("Invalid phone number.");
                 // [END_EXCLUDE]
             } else if (exception is FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded

@@ -42,8 +42,13 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
-            this.Activity.Finish();
-        
+            if ((this.Activity is MainActivity))
+            {
+                var act = (this.Activity as MainActivity);
+                act.SupportFragmentManager.Fragments.Clear();
+            }
+
+            this.Activity.Finish();        
         }
     }
 }

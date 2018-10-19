@@ -20,10 +20,6 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
     public class AuthCountryFragment : Android.Support.V4.App.Fragment
     {
         private View _view;
-
-        private ISharedPreferences mSharedPrefs;
-        private ISharedPreferencesEditor mPrefsEditor;
-        private String PREFERENCE_COUNTNTRY_DATA = "PREFERENCE_COUNTNTRY_DATA";
         private string[] countryArray;
 
         public override void OnActivityCreated(Bundle savedInstanceState)

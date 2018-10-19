@@ -17,27 +17,37 @@ using Project_DB_Tire_Service_Client_Part.Activities;
 using Android.Telephony;
 using Android.Content;
 using Java.Util;
+using Project_DB_Tire_Service_Client_Part.Utils;
+using System;
 
 namespace Project_DB_Tire_Service_Client_Part
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity/*, BottomNavigationView.IOnNavigationItemSelectedListener*/
+    class MainActivity : AppCompatActivity/*, */
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            var preferences = new AppPreferences(this.BaseContext);
+            var data = Convert.ToBoolean(preferences.GetAccessKey(PreferenceField.PREFERENCE_AUTH_SSUCCESS));
+            if (data)
+            {
+                Intent intent = new Intent(this, typeof(MainAppActivity));
+                StartActivity(intent);
+            }
+
             SetContentView(Resource.Layout.activity_main);
 
-            var ft = this.SupportFragmentManager.BeginTransaction();
-            ft.Replace(Resource.Id.parent_fragment_container, new AuthFragment())
-                .AddToBackStack("fragment_auth")
-                .Commit();
+            new FragmentUtil(this, this.SupportFragmentManager)
+                .CreateLoadView(Resource.Id.parent_fragment_container, new AuthFragment());
 
+            new AppPermission(this,this).GetPermissionsAsync();
             //BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_menu);
             //navigation.SetOnNavigationItemSelectedListener(this);
         }
         public override void OnBackPressed()
-        {
+        {            
             if (this.SupportFragmentManager.BackStackEntryCount == 0)
             {
                 base.OnBackPressed();

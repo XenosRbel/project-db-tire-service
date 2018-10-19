@@ -32,7 +32,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             customersTable.Items.Refresh();
         }
 
-        private void customersTable_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void CustomersTable_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
             {

@@ -41,7 +41,7 @@ namespace Project_DB_Tire_Service_Admin_Part
             {
                 case 0:
                     {
-                        myFrame.Navigate(new Template.CustomersPage());                        
+                        myFrame.Navigate(new Template.CustomersPage());
                         break;
                     }
                 case 1:

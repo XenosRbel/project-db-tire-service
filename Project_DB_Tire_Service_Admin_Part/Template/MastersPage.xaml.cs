@@ -27,9 +27,31 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         public MastersPage()
         {
             InitializeComponent();
+            GridRefresh();
+        }
 
+        private void GridRefresh()
+        {
             mastersTable.ItemsSource = new Masters().Load<Masters>();
             mastersTable.Items.Refresh();
+        }
+
+        private void btnAddMasterRec_Click(object sender, RoutedEventArgs e)
+        {
+            new Masters()
+            {
+                FIO = textMaster.Text,
+                Phone = textPhone.Text,
+                Specialization = textSpec.Text
+            }.Insert();
+
+            GridRefresh();
+        }
+
+        private void btnDelMasterRec_Click(object sender, RoutedEventArgs e)
+        {
+            (mastersTable.SelectedItem as Masters).Delete();
+            GridRefresh();
         }
     }
 }

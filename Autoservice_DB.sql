@@ -131,3 +131,45 @@ ALTER TABLE Orders
 ALTER TABLE Orders
 	ADD FOREIGN KEY R_4 (idCustomer) REFERENCES Customers(idCustomer)
 ;
+
+delimiter //
+create procedure Add_Customers(username text, phone text, email text)
+begin
+	insert into Customers values(default, username, phone, email);
+end//
+
+create procedure Add_Masters(username text, spec text, phone text)
+begin
+	insert into Masters values(default, username, spec, phone);
+end//
+
+create procedure Add_Services(service text, rad integer, priceService float, photo longblob)
+begin
+	insert into Services values(default, service, rad, priceService, photo);
+end//
+
+create procedure Add_Armor(arrival date, customer text, service text, stat boolean, execut date)
+begin
+	declare _idServices, _idCustomer int;
+    set _idServices = (select idServices from Services where nameService = service);
+    set _idCustomer = (select idCustomer from Customers where fioC = customer);
+    
+	insert into Armor values(default, arrival, _idCustomer, _idServices, stat, execut);
+end//
+
+create procedure Add_Orders(
+	_userMaster text, 
+	_orderDate date, 
+	_namseService text, 
+	_userCustomer text,
+    _count integer)
+begin
+	declare _idMaster, _idServices, _idCustomer int;
+    
+    set _idServices = (select idServices from Services where nameService = _namseService);
+    set _idCustomer = (select idCustomer from Customers where fioC = _userCustomer);
+    set _idMaster = (select idMaster from Masters where fioM = _userMaster);
+    
+	insert into Orders values(default, _idMaster, _orderDate, _idServices, _idCustomer, _count);
+end//
+delimiter ;

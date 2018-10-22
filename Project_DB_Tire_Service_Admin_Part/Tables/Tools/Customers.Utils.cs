@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
-    partial class Customers
+    partial class Customers : EntityAbstract
     {
         [NonSerialized]
         private MySqlConnection connection;
@@ -136,13 +136,24 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Close();
         }
 
+        public override void Insert()
+        {
+            var cmd = new MySqlCommand(InsertCustomerData());
+
+            cmd.Parameters.AddWithValue("@fioC", this.FioC);
+            cmd.Parameters.AddWithValue("@phone", this.Phone);
+            cmd.Parameters.AddWithValue("@email", this.Email);
+
+            ExecuteNonQuery(cmd);
+        }
+
         string SelectCustomersTable()
         {
             return "SELECT idCustomer, fioC, phone, email FROM Customers;";
         }
 
         string InsertCustomerData() {
-            return "INSERT INTO Customers (fioC, phone, email) VALUES (@fioC, @phone, @email);"; 
+            return "call Add_Customers(@fioC, @phone, @email);"; 
         }
 
         string DeleteCustomerData() {

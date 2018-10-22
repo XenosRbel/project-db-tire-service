@@ -27,7 +27,11 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         public CustomersPage()
         {
             InitializeComponent();
+            GridRefresh();
+        }
 
+        private void GridRefresh()
+        {
             customersTable.ItemsSource = new Customers().Load();
             customersTable.Items.Refresh();
         }
@@ -38,17 +42,27 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             {
                 (customersTable.SelectedItem as Customers).DeleteCustomer();
             }
-            if (e.Key == Key.LeftCtrl)
-            {
-                customersTable.CommitEdit();
-
-                ((sender as DataGrid).SelectedItem as Customers).UpdateCustomer();
-            }
             if (e.Key == Key.F5)
             {
-                customersTable.ItemsSource = new Customers().Load();
-                customersTable.Items.Refresh();
+                GridRefresh();
             }
+        }
+
+        private void btnAddCustomersRec_Click(object sender, RoutedEventArgs e)
+        {
+            new Customers() {
+                FioC = this.textCustomer.Text,
+                Email = this.textEmail.Text,
+                Phone = this.textPhone.Text
+            }.Insert();
+
+            GridRefresh();
+        }
+
+        private void btnDelCustomersRec_Click(object sender, RoutedEventArgs e)
+        {
+            (customersTable.SelectedItem as Customers).DeleteCustomer();
+            GridRefresh();
         }
     }
 }

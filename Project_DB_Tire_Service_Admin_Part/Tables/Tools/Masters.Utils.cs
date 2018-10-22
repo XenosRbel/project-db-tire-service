@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
-    partial class Masters
+    partial class Masters : EntityAbstract
     {
         [NonSerialized]
         private MySqlConnection connection;
@@ -61,34 +61,26 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             return customersData;
         }
 
-        public void Delete()
+        public override void Insert()
         {
-            connection.Open();
+            var cmd = new MySqlCommand(InsertData());
 
-            var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(DeleteData(), connection);
-            var adapter = new MySqlDataAdapter();
+            cmd.Parameters.AddWithValue("@fioM", this.FIO);
+            cmd.Parameters.AddWithValue("@spec", this.Specialization);
+            cmd.Parameters.AddWithValue("@phone", this.Phone);
 
-            command.Transaction = transaction;
-
-            try
-            {
-                adapter.DeleteCommand = command;
-                adapter.DeleteCommand.Parameters.AddWithValue("@idMaster", ID);
-
-                adapter.DeleteCommand.ExecuteNonQuery();
-
-                transaction.Commit();
-            }
-            catch (Exception)
-            {
-                transaction.Rollback();
-            }
-
-            connection.Close();
+            ExecuteNonQuery(cmd);
         }
 
-        public void Update()
+        public override void Delete()
+        {
+            var cmd = new MySqlCommand(DeleteData());
+            cmd.Parameters.AddWithValue("@idMaster", ID);
+
+            ExecuteNonQuery(cmd);
+        }
+
+        public override void Update()
         {
             connection.Open();
 
@@ -125,7 +117,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string InsertData()
         {
-            return "INSERT INTO masters (fioM, phone, email) VALUES (@fioM, @phone, @email);";
+            return "call Add_Masters(@fioM, @spec, @phone);";
         }
 
         string DeleteData()
@@ -136,16 +128,6 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
         string UpdateData()
         {
             return "UPDATE masters SET fioM = @fioM, phone = @phone, email = @email WHERE (idMaster = @idMaster);";
-        }
-
-        private MySqlDataAdapter InsertAdapter(Customers customers)
-        {
-            var command = new MySqlCommand(InsertData(), connection);
-            var adapter = new MySqlDataAdapter();
-            adapter.InsertCommand = command;
-            adapter.InsertCommand.Parameters.AddWithValue("@fioM", customers.FioC);
-
-            return adapter;
         }
 
         public byte[] Serialize()

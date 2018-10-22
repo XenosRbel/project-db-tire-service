@@ -33,5 +33,17 @@ namespace Project_DB_Tire_Service_Admin_Part.Properties {
                 return ((string)(this["dbConnectionS"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Параметр {
+            get {
+                return ((string)(this["Параметр"]));
+            }
+            set {
+                this["Параметр"] = value;
+            }
+        }
     }
 }

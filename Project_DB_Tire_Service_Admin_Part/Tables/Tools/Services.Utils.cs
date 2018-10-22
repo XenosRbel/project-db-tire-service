@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Windows.Media.Imaging;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
-    partial class Services
+    partial class Services : EntityAbstract
     {
         [NonSerialized]
         private MySqlConnection connection;
@@ -37,9 +38,10 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                 while (reader.Read())
                 {
                     T obj = new T();
+                    var img = (byte[])reader["photoDetails"];
                     obj.IdServices = reader.GetInt32(0);
                     obj.NameService = reader.GetString(1);
-                    obj.Radius = reader.GetByte(2);
+                    obj.Radius = reader.GetInt32(2);
                     obj.Price = reader.GetFloat(3);
                     obj.PhotoDetails = ConvertBinToImage((byte[])reader["photoDetails"]);
 
@@ -64,34 +66,27 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             return customersData;
         }
 
-        public void Delete()
+        public override void Insert()
         {
-            connection.Open();
+            var cmd = new MySqlCommand(InsertData());
 
-            var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(DeleteData(), connection);
-            var adapter = new MySqlDataAdapter();
+            cmd.Parameters.AddWithValue("@nameService", this.NameService);
+            cmd.Parameters.AddWithValue("@radius", this.Radius);
+            cmd.Parameters.AddWithValue("@price", this.Price);
+            cmd.Parameters.AddWithValue("@photoDetails", BitmapImageToByte(this.PhotoDetails));
 
-            command.Transaction = transaction;
-
-            try
-            {
-                adapter.DeleteCommand = command;
-                adapter.DeleteCommand.Parameters.AddWithValue("@idServices", IdServices);
-
-                adapter.DeleteCommand.ExecuteNonQuery();
-
-                transaction.Commit();
-            }
-            catch (Exception)
-            {
-                transaction.Rollback();
-            }
-
-            connection.Close();
+            ExecuteNonQuery(cmd);
         }
 
-        public void Update()
+        public override void Delete()
+        {
+            var cmd = new MySqlCommand(DeleteData());
+            cmd.Parameters.AddWithValue("@idServices", this.IdServices);
+
+            ExecuteNonQuery(cmd);
+        }
+
+        public override void Update()
         {
             connection.Open();
 
@@ -129,7 +124,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string InsertData()
         {
-            return "INSERT INTO services (nameService, radius, price, photoDetails) VALUES (@nameService, @radius, @price, @photoDetails);";
+            return "call Add_Services(@nameService, @radius, @price, @photoDetails);";
         }
 
         string DeleteData()
@@ -142,17 +137,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             return "UPDATE services SET nameService = @nameService, radius = @radius, price = @price, photoDetails = @photoDetails WHERE (idServices = @idServices);";
         }
 
-        private MySqlDataAdapter InsertAdapter(Services customers)
-        {
-            var command = new MySqlCommand(InsertData(), connection);
-            var adapter = new MySqlDataAdapter();
-
-            adapter.InsertCommand = command;
-            adapter.InsertCommand.Parameters.AddWithValue("@nameService", customers.NameService);
-
-            return adapter;
-        }
-
+        #region Serialize
         public byte[] Serialize()
         {
             using (MemoryStream m = new MemoryStream())
@@ -186,9 +171,10 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             }
             return obj;
         }
+        #endregion
 
         #region BitmapConventer
-        private static byte[] ConvertImageBin(System.Drawing.Image image)
+        private static byte[] ConvertImageBin(Image image)
         {
             using (MemoryStream ms = new MemoryStream())
             {

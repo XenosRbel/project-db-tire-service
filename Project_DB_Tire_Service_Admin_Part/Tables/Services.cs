@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
     [Serializable]
     partial class Services
     {
-        public Services(int idServices, string nameService, byte radius, float price, BitmapImage photoDetails)
+        public Services(int idServices, string nameService, int radius, float price, BitmapImage photoDetails)
         {
             IdServices = idServices;
             NameService = nameService;
@@ -24,7 +25,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public int IdServices { set; get; }
         public string NameService { set; get; }
-        public byte Radius { set; get; }
+        public int Radius { set; get; }
         public float Price { set; get; }
         public BitmapImage PhotoDetails { set; get; }
 

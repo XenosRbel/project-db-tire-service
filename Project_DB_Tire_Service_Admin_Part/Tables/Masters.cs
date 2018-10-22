@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     [Serializable]
-    partial class Masters
+    partial class Masters : EntityAbstract
     {
         public Masters(int iD, string fIO, string specialization, string phone)
         {

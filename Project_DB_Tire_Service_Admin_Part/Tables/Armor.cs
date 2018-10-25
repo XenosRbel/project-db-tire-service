@@ -28,27 +28,34 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
         public DateTime ArrivalDate { set; get; }
         public DateTime DateExecution { set; get; }
         public ArmorStatus StatusA { set; get; }
+        public string Customer { set; get; }
+        public string Service { set; get; }
 
         public override bool Equals(object obj)
         {
-            return obj is Armor armor &&
+            var armor = obj as Armor;
+            return armor != null &&
                    ID == armor.ID &&
                    IdCustomers == armor.IdCustomers &&
                    IDService == armor.IDService &&
                    ArrivalDate == armor.ArrivalDate &&
                    DateExecution == armor.DateExecution &&
-                   StatusA == armor.StatusA;
+                   StatusA == armor.StatusA &&
+                   Customer == armor.Customer &&
+                   Service == armor.Service;
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -161968347;
+            var hashCode = -830090982;
             hashCode = hashCode * -1521134295 + ID.GetHashCode();
             hashCode = hashCode * -1521134295 + IdCustomers.GetHashCode();
             hashCode = hashCode * -1521134295 + IDService.GetHashCode();
             hashCode = hashCode * -1521134295 + ArrivalDate.GetHashCode();
             hashCode = hashCode * -1521134295 + DateExecution.GetHashCode();
             hashCode = hashCode * -1521134295 + StatusA.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Customer);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Service);
             return hashCode;
         }
     }

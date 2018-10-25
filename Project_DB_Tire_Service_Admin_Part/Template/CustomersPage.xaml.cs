@@ -1,8 +1,10 @@
 ﻿using Project_DB_Tire_Service_Admin_Part.Tables;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
 
 namespace Project_DB_Tire_Service_Admin_Part.Template
 {
@@ -28,11 +32,20 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         {
             InitializeComponent();
             GridRefresh();
+            textEmail.TextChanged += Text_TextChanged;
+            textCustomer.TextChanged += Text_TextChanged;
+            textPhone.TextChanged += Text_TextChanged;
         }
 
-        private void GridRefresh()
+        private async void GridRefresh()
         {
-            customersTable.ItemsSource = new Customers().Load();
+            List<Customers> data = new List<Customers>();
+            await Task.Run(() =>
+            {
+                data = new Customers().Load();
+            });
+
+            customersTable.ItemsSource = data;
             customersTable.Items.Refresh();
         }
 
@@ -40,7 +53,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         {
             if (e.Key == Key.Delete)
             {
-                (customersTable.SelectedItem as Customers).DeleteCustomer();
+                (customersTable.SelectedItem as Customers)?.DeleteCustomer();
             }
             if (e.Key == Key.F5)
             {
@@ -50,18 +63,77 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
         private void btnAddCustomersRec_Click(object sender, RoutedEventArgs e)
         {
-            new Customers() {
+            var entity = new Customers()
+            {
                 FioC = this.textCustomer.Text,
                 Email = this.textEmail.Text,
                 Phone = this.textPhone.Text
-            }.Insert();
+            };
 
+            if (!IsValidInput(entity))
+            {
+                return;
+            }
+
+            entity.Insert();
             GridRefresh();
+
+            ClearFields();
+        }
+
+        private void ClearFields()
+        {
+            this.textCustomer.Text = null;
+            this.textEmail.Text = null;
+            this.textPhone.Text = null;
+        }
+
+        private void Text_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var entity = new Customers()
+            {
+                FioC = this.textCustomer.Text,
+                Email = this.textEmail.Text,
+                Phone = this.textPhone.Text
+            };
+
+            IsValidInput(entity);
+        }
+
+        private bool IsValidInput(Customers entity)
+        {
+            var context = new ValidationContext(entity);
+            var results = new List<ValidationResult>();
+            var errorMark = true;
+
+            if (!Validator.TryValidateObject(entity, context, results, true))
+            {
+                textPhone.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#af2b1e"));
+                textEmail.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#af2b1e"));
+                errorMark = false;
+            }
+            else
+            {
+                textPhone.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#66ff00"));
+                textEmail.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#66ff00"));
+            }
+
+            if (string.IsNullOrWhiteSpace(textCustomer.Text))
+            {
+                textCustomer.BorderBrush = new SolidColorBrush((Color) ColorConverter.ConvertFromString("#af2b1e"));
+                errorMark = false;
+            }
+            else
+            {
+                textCustomer.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#66ff00"));
+            }
+
+            return errorMark;
         }
 
         private void btnDelCustomersRec_Click(object sender, RoutedEventArgs e)
         {
-            (customersTable.SelectedItem as Customers).DeleteCustomer();
+            (customersTable.SelectedItem as Customers)?.DeleteCustomer();
             GridRefresh();
         }
     }

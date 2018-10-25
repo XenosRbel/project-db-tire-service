@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
-    partial class Armor
+    partial class Armor : EntityAbstract
     {
-        [NonSerialized]
-        private MySqlConnection connection;
-
         public Armor()
         {
             connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
@@ -63,34 +60,28 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             return data;
         }
 
-        public void Delete()
+        public override void Insert()
         {
-            connection.Open();
+            var cmd = new MySqlCommand(InsertData());
 
-            var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(DeleteData(), connection);
-            var adapter = new MySqlDataAdapter();
+            cmd.Parameters.AddWithValue("@arrivalDate", this.ArrivalDate);
+            cmd.Parameters.AddWithValue("@customerUser", this.Customer);
+            cmd.Parameters.AddWithValue("@service", this.Service);
+            cmd.Parameters.AddWithValue("@statusA", this.StatusA);
+            cmd.Parameters.AddWithValue("@dateExecution", this.DateExecution);
 
-            command.Transaction = transaction;
-
-            try
-            {
-                adapter.DeleteCommand = command;
-                adapter.DeleteCommand.Parameters.AddWithValue("@id", ID);
-
-                adapter.DeleteCommand.ExecuteNonQuery();
-
-                transaction.Commit();
-            }
-            catch (Exception)
-            {
-                transaction.Rollback();
-            }
-
-            connection.Close();
+            ExecuteNonQuery(cmd);
         }
 
-        public void Update()
+        public override void Delete()
+        {
+            var cmd = new MySqlCommand(DeleteData());
+            cmd.Parameters.AddWithValue("@id", ID);
+
+            ExecuteNonQuery(cmd);
+        }
+
+        public override void Update()
         {
             connection.Open();
 
@@ -128,7 +119,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string InsertData()
         {
-            return "INSERT INTO armor (arrivalDate, idCustomer, idServices, statusA, dateExecution) VALUES (@arrivalDate, @idCustomer, @idServices, @statusA, @dateExecution);";
+            return "call Add_Armor(@arrivalDate, @customerUser, @service, @statusA, @dateExecution);";
         }
 
         string DeleteData()
@@ -140,16 +131,6 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
         {
             return "UPDATE armor SET " +
                 "arrivalDate = @arrivalDate, idCustomer = @idCustomer, idServices = @idServices, statusA = @statusA, dateExecution = @dateExecution WHERE (id = @id);";
-        }
-
-        private MySqlDataAdapter InsertAdapter(Armor customers)
-        {
-            var command = new MySqlCommand(InsertData(), connection);
-            var adapter = new MySqlDataAdapter();
-            adapter.InsertCommand = command;
-            adapter.InsertCommand.Parameters.AddWithValue("@fioM", customers.DateExecution);
-
-            return adapter;
         }
 
         public byte[] Serialize()

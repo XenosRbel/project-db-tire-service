@@ -84,7 +84,7 @@
                 <Button x:Name="btnAddArmorRec" Height="30" Click="btnAddArmorRec_Click">
                     <Label Content="Добавить" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
                 </Button>
-                <Button x:Name="btnDelArmorRec" Height="30" Grid.Column="1">
+                <Button x:Name="btnDelArmorRec" Height="30" Grid.Column="1" Click="btnDelArmorRec_Click">
                     <Label Content="Удалить выбранное" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
                 </Button>
             </Grid>

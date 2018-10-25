@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -32,26 +35,41 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             InitializeComponent();
 
             GridRefresh();
+            textPrice.PreviewTextInput += TextPrice_PreviewTextInput;
         }
 
-        private void GridRefresh()
+        private void TextPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            servicesTable.ItemsSource = new Services().Load<Services>();
+            if (!char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private async void GridRefresh()
+        {
+            List<Services> data = new List<Services>();
+
+            await Task.Run(() =>
+            {
+                data = new Services().Load<Services>();
+            });
+
+            servicesTable.ItemsSource = data;
             servicesTable.Items.Refresh();
         }
 
         private void btnAddServicesRec_Click(object sender, RoutedEventArgs e)
         {
-            var decoderPath = ((BitmapFrame)imagePhoto.Source).Decoder.ToString();
+            if (string.IsNullOrWhiteSpace(textPrice.Text)) return;
+            if (string.IsNullOrWhiteSpace(textService.Text)) return;
 
-            Regex regex = new Regex("(component.*|.png|.jpg)");
-
-            var imgPath = regex.Match(decoderPath).Value.Replace("component", "");
-            var img = new BitmapImage(new Uri(decoderPath));
+            var img = GetImage();
+           
             new Services()
             {
                 NameService = this.textService.Text,
-                PhotoDetails = img,
+                SImage = img,
                 Price = Convert.ToInt32(this.textPrice.Text),
                 Radius = Convert.ToByte(this.cmbRadius.SelectedItem)
             }.Insert();
@@ -59,18 +77,41 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             GridRefresh();
         }
 
+        private System.Drawing.Image GetImage()
+        {
+            string path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            var directory = System.IO.Path.GetDirectoryName(path);
+
+            System.Drawing.Image img;
+            if (imgURL != null)
+            {
+                img = System.Drawing.Image.FromFile(imgURL);
+            }
+            else
+            {
+                img = //Bitmap.FromFile(new Uri(@"").);
+                    System.Drawing.Image.FromFile(directory + @"\error_no_image.png");
+            }
+
+            return img;
+        }
+
         private void btnDelServicesRec_Click(object sender, RoutedEventArgs e)
         {
-
+            (servicesTable.SelectedItem as Services)?.Delete();
+            GridRefresh();
         }
 
         private void Page_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
 
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+
+            if (files != null)
+            {
                 imagePhoto.Source = new BitmapImage(new Uri(files[0]));
+                imgURL = files[0];
             }
         }
     }

@@ -5,26 +5,24 @@ USE Autoservice;
 
 CREATE TABLE Armor
 (
-	id  INTEGER NULL,
+	id  INTEGER primary key auto_increment,
 	arrivalDate  DATE NOT NULL,
 	idCustomer  INTEGER NOT NULL,
 	idServices  INTEGER NOT NULL,
 	statusA  boolean NOT NULL,
-	dateExection  DATE NOT NULL
+	dateExecution  DATE NOT NULL
 )
 ;
 
 
 
 ALTER TABLE Armor
-	ADD  PRIMARY KEY (id,idCustomer,idServices)
+	#ADD  PRIMARY KEY (id,idCustomer,idServices) 
 ;
-
-
 
 CREATE TABLE Customers
 (
-	idCustomer  INTEGER NULL,
+	idCustomer  INTEGER primary key auto_increment,
 	fioC  TEXT NOT NULL,
 	phone  TEXT NOT NULL,
 	email  TEXT NULL
@@ -32,16 +30,9 @@ CREATE TABLE Customers
 ;
 
 
-
-ALTER TABLE Customers
-	ADD  PRIMARY KEY (idCustomer)
-;
-
-
-
 CREATE TABLE Masters
 (
-	idMaster  INTEGER NULL,
+	idMaster  INTEGER primary key auto_increment,
 	fioM  TEXT NOT NULL,
 	specialization  TEXT NOT NULL,
 	phone  TEXT NOT NULL
@@ -50,15 +41,9 @@ CREATE TABLE Masters
 
 
 
-ALTER TABLE Masters
-	ADD  PRIMARY KEY (idMaster)
-;
-
-
-
 CREATE TABLE Orders
 (
-	idOrder  INTEGER NULL,
+	idOrder  INTEGER primary key auto_increment,
 	idMaster  INTEGER NOT NULL,
 	orderDate  DATE NOT NULL,
 	idServices  INTEGER NOT NULL,
@@ -70,14 +55,14 @@ CREATE TABLE Orders
 
 
 ALTER TABLE Orders
-	ADD  PRIMARY KEY (idOrder,idMaster,idServices,idCustomer)
+	#ADD  PRIMARY KEY (idOrder,idMaster,idServices,idCustomer)
 ;
 
 
 
 CREATE TABLE Services
 (
-	idServices  INTEGER NULL,
+	idServices  INTEGER primary key auto_increment,
 	nameService  TEXT NOT NULL,
 	radius  INTEGER NOT NULL,
 	price  FLOAT NOT NULL,
@@ -88,7 +73,7 @@ CREATE TABLE Services
 
 
 ALTER TABLE Services
-	ADD  PRIMARY KEY (idServices)
+	#ADD  PRIMARY KEY (idServices)
 ;
 
 

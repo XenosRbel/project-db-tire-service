@@ -15,16 +15,16 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Background="Black" IsHitTestVisible="True" Grid.Row="0">
-            <DataGrid x:Name="servicesTable" Margin="0" AutoGenerateColumns="False">
+            <DataGrid x:Name="servicesTable" Margin="0" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Hidden">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding IdServices}" Header="Код услуги" Width="120*"/>
                     <DataGridTextColumn Binding="{Binding NameService}" Header="Название услуги" Width="120*"/>
                     <DataGridTextColumn Binding="{Binding Radius}" Header="Радиус" Width="120*"/>
                     <DataGridTextColumn Binding="{Binding Price}" Header="Цена за ед. BYN" Width="120*"/>
-                    <DataGridTemplateColumn Header="Фото" Width="120*" IsReadOnly="True">
+                    <DataGridTemplateColumn Header="Фото" Width="80*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding PhotoDetails}" />
+                                <Image Height="auto" StretchDirection="DownOnly" Source="{Binding PhotoDetails}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

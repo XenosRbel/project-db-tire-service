@@ -73,7 +73,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             cmd.Parameters.AddWithValue("@nameService", this.NameService);
             cmd.Parameters.AddWithValue("@radius", this.Radius);
             cmd.Parameters.AddWithValue("@price", this.Price);
-            cmd.Parameters.AddWithValue("@photoDetails", BitmapImageToByte(this.PhotoDetails));
+            cmd.Parameters.AddWithValue("@photoDetails", ConvertImageBin(this.SImage));
 
             ExecuteNonQuery(cmd);
         }
@@ -185,7 +185,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public static byte[] BitmapImageToByte(BitmapImage imageSource)
         {
-            Stream stream = imageSource.StreamSource;
+            var stream = imageSource.StreamSource;
+
             byte[] buffer = null;
             if (stream != null && stream.Length > 0)
             {

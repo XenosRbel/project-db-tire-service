@@ -12,9 +12,6 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Masters : EntityAbstract
     {
-        [NonSerialized]
-        private MySqlConnection connection;
-
         public Masters()
         {
             connection = new MySqlConnection(new Properties.Settings().dbConnectionS);

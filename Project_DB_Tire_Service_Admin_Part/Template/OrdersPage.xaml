@@ -70,10 +70,10 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="btnAddOrderRec" Height="30">
+                <Button x:Name="btnAddOrderRec" Height="30" Click="btnAddOrderRec_Click">
                     <Label Content="Добавить" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
                 </Button>
-                <Button x:Name="btnDelOrderRec" Height="30" Grid.Column="1">
+                <Button x:Name="btnDelOrderRec" Height="30" Grid.Column="1" Click="btnDelOrderRec_Click">
                     <Label Content="Удалить выбранное" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
                 </Button>
             </Grid>

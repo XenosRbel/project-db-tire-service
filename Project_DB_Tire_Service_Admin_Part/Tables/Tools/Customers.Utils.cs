@@ -11,9 +11,6 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Customers : EntityAbstract
     {
-        [NonSerialized]
-        private MySqlConnection connection;
-
         public Customers()
         {
             connection = new MySqlConnection(new Properties.Settings().dbConnectionS);

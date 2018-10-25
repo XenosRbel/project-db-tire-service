@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
-    partial class Orders
+    partial class Orders : EntityAbstract
     {
-        [NonSerialized]
-        private MySqlConnection connection;
-
         public Orders()
         {
             connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
@@ -36,10 +33,10 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                 {
                     T obj = new T();
                     obj.ID = reader.GetInt32(0);
-                    obj.IdMaster = reader.GetInt32(1);
+                    obj.IdMaster = reader.GetString(1);
                     obj.OrderDate = reader.GetDateTime(2);
-                    obj.IdServices = reader.GetInt32(3);
-                    obj.IdCustomer = reader.GetInt32(4);
+                    obj.IdServices = reader.GetString(3);
+                    obj.IdCustomer = reader.GetString(4);
                     obj.CountO = reader.GetInt32(5);
 
                     customersData.Add(obj);
@@ -61,7 +58,20 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             return customersData;
         }
 
-        public void Delete()
+        public override void Insert()
+        {
+            var cmd = new MySqlCommand(InsertData());
+
+            cmd.Parameters.AddWithValue("@idMaster", this.IdMaster);
+            cmd.Parameters.AddWithValue("@orderDate", this.OrderDate);
+            cmd.Parameters.AddWithValue("@idServices", this.IdServices);
+            cmd.Parameters.AddWithValue("@idCustomer", this.IdCustomer);
+            cmd.Parameters.AddWithValue("@countO", this.CountO);
+
+            ExecuteNonQuery(cmd);
+        }
+
+        public override void Delete()
         {
             connection.Open();
 
@@ -88,7 +98,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Close();
         }
 
-        public void Update()
+        public override void Update()
         {
             connection.Open();
 
@@ -127,8 +137,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string InsertData()
         {
-            return "INSERT INTO orders (idMaster, orderDate, idServices, idCustomer, countO) " +
-                "VALUES (@idMaster, @orderDate, @idServices, @idCustomer, @countO);";
+            return "call Add_Orders(@idMaster, @orderDate, @idServices, @idCustomer, @countO);";
         }
 
         string DeleteData()
@@ -180,10 +189,10 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
                     obj.ID = reader.ReadInt32();
-                    obj.IdMaster = reader.ReadInt32();
+                    obj.IdMaster = reader.ReadString();
                     obj.OrderDate = DateTime.FromBinary(reader.ReadInt64());
-                    obj.IdServices = reader.ReadInt32();
-                    obj.IdCustomer = reader.ReadInt32();
+                    obj.IdServices = reader.ReadString();
+                    obj.IdCustomer = reader.ReadString();
                     obj.CountO = reader.ReadInt32();
                 }
             }

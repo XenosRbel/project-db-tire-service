@@ -28,6 +28,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
         public int Radius { set; get; }
         public float Price { set; get; }
         public BitmapImage PhotoDetails { set; get; }
+        public Image SImage { set; get; }
 
         public override bool Equals(object obj)
         {

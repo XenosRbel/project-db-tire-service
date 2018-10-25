@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Project_DB_Tire_Service_Admin_Part.Entity.Validate;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
@@ -23,6 +24,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
         public int ID { set; get; }
         public string FIO { set; get; }
         public string Specialization { set; get; }
+        [Phone]
         public string Phone { set; get; }
 
         public override bool Equals(object obj)

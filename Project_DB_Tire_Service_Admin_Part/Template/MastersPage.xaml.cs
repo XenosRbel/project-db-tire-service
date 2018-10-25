@@ -30,9 +30,15 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             GridRefresh();
         }
 
-        private void GridRefresh()
+        private async void GridRefresh()
         {
-            mastersTable.ItemsSource = new Masters().Load<Masters>();
+            List<Masters> data = new List<Masters>();
+            await Task.Run(() =>
+            {
+                data = new Masters().Load<Masters>();
+            });
+
+            mastersTable.ItemsSource = data;
             mastersTable.Items.Refresh();
         }
 
@@ -50,7 +56,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
         private void btnDelMasterRec_Click(object sender, RoutedEventArgs e)
         {
-            (mastersTable.SelectedItem as Masters).Delete();
+            (mastersTable.SelectedItem as Masters)?.Delete();
             GridRefresh();
         }
     }

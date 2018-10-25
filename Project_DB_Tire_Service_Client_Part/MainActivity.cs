@@ -23,7 +23,7 @@ using System;
 namespace Project_DB_Tire_Service_Client_Part
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    class MainActivity : AppCompatActivity/*, */
+    class MainActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -35,6 +35,8 @@ namespace Project_DB_Tire_Service_Client_Part
             {
                 Intent intent = new Intent(this, typeof(MainAppActivity));
                 StartActivity(intent);
+
+                this.Finish();
             }
 
             SetContentView(Resource.Layout.activity_main);

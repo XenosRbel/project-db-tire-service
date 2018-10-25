@@ -10,14 +10,14 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
     abstract class EntityAbstract
     {
         [NonSerialized]
-        private MySqlConnection connection;
+        public MySqlConnection connection;
 
         public EntityAbstract()
         {
             connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
-        public virtual void ExecuteNonQuery(MySqlCommand command)
+        public virtual async void ExecuteNonQuery(MySqlCommand command)
         {
             connection.Open();
 
@@ -27,7 +27,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
             try
             {
-                command.ExecuteNonQuery();
+                await command.ExecuteNonQueryAsync();
                 transaction.Commit();
                 connection.Close();
             }

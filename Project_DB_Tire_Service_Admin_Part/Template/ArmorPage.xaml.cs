@@ -35,6 +35,20 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             FillCustomerCmb();
             FillServicesCmb();
             FillStatusCmb();
+
+            armorTable.PreviewKeyDown += ArmorTable_PreviewKeyDown;
+        }
+
+        private void ArmorTable_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                (armorTable.SelectedItem as Armor)?.Delete();
+            }
+            if (e.Key == Key.F5)
+            {
+                GridRefresh();
+            }
         }
 
         private async void FillCustomerCmb()

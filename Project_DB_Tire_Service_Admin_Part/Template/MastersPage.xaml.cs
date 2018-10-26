@@ -28,6 +28,20 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         {
             InitializeComponent();
             GridRefresh();
+
+            mastersTable.PreviewKeyDown += MastersTable_PreviewKeyDown;
+        }
+
+        private void MastersTable_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                (mastersTable.SelectedItem as Masters)?.Delete();
+            }
+            if (e.Key == Key.F5)
+            {
+                GridRefresh();
+            }
         }
 
         private async void GridRefresh()

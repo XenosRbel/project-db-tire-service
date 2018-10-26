@@ -44,8 +44,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
             var editCountry = _view.FindViewById<EditText>(Resource.Id.edit_auth_contry);
 
-            string currentCountry, countryCode;
-            GetCurrentCountryCode(out currentCountry, out countryCode);
+            GetCurrentCountryCode(out var currentCountry, out var countryCode);
 
             editCountry.Text = $"{currentCountry}\t(+{countryCode})";
             
@@ -57,7 +56,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             base.OnResume();
 
             var preferences = new AppPreferences(this._view.Context);
-            var data = preferences.GetAccessKey(PreferenceField.PREFERENCE_COUNTNTRY_DATA).Split('\t');
+            var data = Convert.ToString(preferences.GetAccessKey(PreferenceField.PREFERENCE_COUNTNTRY_DATA)).Split('\t');
 
             if (!string.IsNullOrEmpty(data[0]))
             {

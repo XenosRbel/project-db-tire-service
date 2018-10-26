@@ -36,6 +36,19 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             FillServicesCmb();
 
             textCount.PreviewTextInput += TextCount_PreviewTextInput;
+            ordersTable.PreviewKeyDown += OrdersTable_PreviewKeyDown;
+        }
+
+        private void OrdersTable_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                (ordersTable.SelectedItem as Orders)?.Delete();
+            }
+            if (e.Key == Key.F5)
+            {
+                GridRefresh();
+            }
         }
 
         public bool IsNulledDate(DatePicker datePicker)

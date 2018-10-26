@@ -14,12 +14,6 @@ CREATE TABLE Armor
 )
 ;
 
-
-
-ALTER TABLE Armor
-	#ADD  PRIMARY KEY (id,idCustomer,idServices) 
-;
-
 CREATE TABLE Customers
 (
 	idCustomer  INTEGER primary key auto_increment,
@@ -29,7 +23,6 @@ CREATE TABLE Customers
 )
 ;
 
-
 CREATE TABLE Masters
 (
 	idMaster  INTEGER primary key auto_increment,
@@ -38,8 +31,6 @@ CREATE TABLE Masters
 	phone  TEXT NOT NULL
 )
 ;
-
-
 
 CREATE TABLE Orders
 (
@@ -52,14 +43,6 @@ CREATE TABLE Orders
 )
 ;
 
-
-
-ALTER TABLE Orders
-	#ADD  PRIMARY KEY (idOrder,idMaster,idServices,idCustomer)
-;
-
-
-
 CREATE TABLE Services
 (
 	idServices  INTEGER primary key auto_increment,
@@ -69,14 +52,6 @@ CREATE TABLE Services
 	photoDetails  LONGBLOB NULL
 )
 ;
-
-
-
-ALTER TABLE Services
-	#ADD  PRIMARY KEY (idServices)
-;
-
-
 
 CREATE VIEW BriefOrderInfo AS
 	SELECT Orders.idOrder,Customers.fioC,Masters.fioM,Services.nameService,Services.price,Orders.countO,Orders.orderDate
@@ -90,7 +65,10 @@ CREATE VIEW FullOrderInfo AS
 		FROM Customers,Masters,Orders,Services
 ;
 
-
+create view SelectOrder as (select idOrder, fioM, nameService, fioC, orderDate, countO from Orders
+	inner join Customers on Orders.idCustomer = Customers.idCustomer
+    inner join Masters on Orders.idMaster = Masters.idMaster
+    inner join Services on Orders.idServices = Services.idServices);
 
 ALTER TABLE Armor
 	ADD FOREIGN KEY R_1 (idCustomer) REFERENCES Customers(idCustomer)

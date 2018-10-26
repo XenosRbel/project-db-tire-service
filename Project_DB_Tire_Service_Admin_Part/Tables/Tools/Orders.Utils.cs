@@ -34,8 +34,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                     T obj = new T();
                     obj.ID = reader.GetInt32(0);
                     obj.IdMaster = reader.GetString(1);
-                    obj.OrderDate = reader.GetDateTime(2);
-                    obj.IdServices = reader.GetString(3);
+                    obj.OrderDate = reader.GetDateTime(4);
+                    obj.IdServices = reader.GetString(2);
                     obj.IdCustomer = reader.GetString(4);
                     obj.CountO = reader.GetInt32(5);
 
@@ -132,7 +132,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string SelectTable()
         {
-            return "SELECT idOrder, idMaster, orderDate, idServices, idCustomer, countO FROM orders;";
+            return "select idOrder, fioM, nameService, fioC, orderDate, countO from SelectOrder;";
         }
 
         string InsertData()

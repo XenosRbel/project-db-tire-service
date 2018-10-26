@@ -57,7 +57,7 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
         {
             PhoneAuthProvider.GetInstance(Auth).VerifyPhoneNumber(
                     phoneNumber,     
-                    120,           
+                    60,           
                     TimeUnit.Seconds,
                     Activity,            
                     MCallbacks);    
@@ -81,9 +81,12 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
 
         public void VerifyPhoneNumberWithCode(string verificationId, string code)
         {
-            PhoneAuthCredential credential = PhoneAuthProvider.GetCredential(verificationId, code);
+            if (verificationId != null)
+            {
+                PhoneAuthCredential credential = PhoneAuthProvider.GetCredential(verificationId, code);
 
-            SignInWithPhoneAuthCredential(credential);
+                SignInWithPhoneAuthCredential(credential);
+            }
         }
 
         void IOnCompleteListener.OnComplete(Task task)

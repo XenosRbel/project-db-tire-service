@@ -35,7 +35,7 @@ namespace Project_DB_Tire_Service_Admin_Part
 
         private void splitMenu_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            var item = (sender as ListView).SelectedIndex;
+            var item = ((ListView) sender).SelectedIndex;
 
             switch (item)
             {

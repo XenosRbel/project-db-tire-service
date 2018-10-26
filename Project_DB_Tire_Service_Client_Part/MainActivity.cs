@@ -29,13 +29,15 @@ namespace Project_DB_Tire_Service_Client_Part
         {
             base.OnCreate(savedInstanceState);
 
+            new AppPermission(this, this).GetPermissionsAsync();
+
             var preferences = new AppPreferences(this.BaseContext);
+
             var data = Convert.ToBoolean(preferences.GetAccessKey(PreferenceField.PREFERENCE_AUTH_SSUCCESS));
             if (data)
             {
                 Intent intent = new Intent(this, typeof(MainAppActivity));
                 StartActivity(intent);
-
                 this.Finish();
             }
 
@@ -43,8 +45,7 @@ namespace Project_DB_Tire_Service_Client_Part
 
             new FragmentUtil(this, this.SupportFragmentManager)
                 .CreateLoadView(Resource.Id.parent_fragment_container, new AuthFragment());
-
-            new AppPermission(this,this).GetPermissionsAsync();
+            
             //BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_menu);
             //navigation.SetOnNavigationItemSelectedListener(this);
         }

@@ -19,8 +19,8 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
         private ISharedPreferencesEditor mPrefsEditor;
         private Context mContext;
 
-        private String PREFERENCE_COUNTNTRY_DATA = "PREFERENCE_COUNTNTRY_DATA";
-        private String PREFERENCE_AUTH_SSUCCESS = "PREFERENCE_AUTH_SSUCCESS";
+        private readonly String PREFERENCE_COUNTNTRY_DATA = "PREFERENCE_COUNTNTRY_DATA";
+        private readonly String PREFERENCE_AUTH_SSUCCESS = "PREFERENCE_AUTH_SSUCCESS";
 
         public AppPreferences(Context context)
         {
@@ -29,19 +29,19 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
             mPrefsEditor = mSharedPrefs.Edit();
         }
 
-        public void SaveAccessKey(PreferenceField field, string value)
+        public void SaveAccessKey(PreferenceField field, object value)
         {
             switch (field)
             {
                 case PreferenceField.PREFERENCE_COUNTNTRY_DATA:
                     {
-                        mPrefsEditor.PutString(PREFERENCE_COUNTNTRY_DATA, value);
+                        mPrefsEditor.PutString(PREFERENCE_COUNTNTRY_DATA, Convert.ToString(value));
                         mPrefsEditor.Commit();
                         break;
                     }
                 case PreferenceField.PREFERENCE_AUTH_SSUCCESS:
                     {
-                        mPrefsEditor.PutString(PREFERENCE_AUTH_SSUCCESS, value);
+                        mPrefsEditor.PutBoolean(PREFERENCE_AUTH_SSUCCESS, Convert.ToBoolean(value));
                         mPrefsEditor.Commit();
                         break;
                     }
@@ -50,20 +50,28 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
             }
         }
 
-        public string GetAccessKey(PreferenceField field)
+        public object GetAccessKey(PreferenceField field)
         {
-            switch (field)
+            try
             {
-                case PreferenceField.PREFERENCE_COUNTNTRY_DATA:
+                switch (field)
+                {
+                    case PreferenceField.PREFERENCE_COUNTNTRY_DATA:
                     {
                         return mSharedPrefs.GetString(PREFERENCE_COUNTNTRY_DATA, "");
                     }
-                case PreferenceField.PREFERENCE_AUTH_SSUCCESS:
+                    case PreferenceField.PREFERENCE_AUTH_SSUCCESS:
                     {
-                        return mSharedPrefs.GetString(PREFERENCE_AUTH_SSUCCESS, "false");
+                        return mSharedPrefs.GetBoolean(PREFERENCE_AUTH_SSUCCESS, false);
                     }
-                default:
-                    return null;
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception e)
+            {
+                ClearAccessKey();
+                return null;
             }
         }
 

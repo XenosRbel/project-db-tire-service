@@ -36,6 +36,19 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             GridRefresh();
             textPrice.PreviewTextInput += TextPrice_PreviewTextInput;
+            servicesTable.PreviewKeyDown += ServicesTable_PreviewKeyDown;
+        }
+
+        private void ServicesTable_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                (servicesTable.SelectedItem as Services)?.Delete();
+            }
+            if (e.Key == Key.F5)
+            {
+                GridRefresh();
+            }
         }
 
         private void TextPrice_PreviewTextInput(object sender, TextCompositionEventArgs e)

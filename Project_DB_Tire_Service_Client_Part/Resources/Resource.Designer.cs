@@ -2667,8 +2667,8 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f0b0029
 			public const int disableHome = 2131427369;
 			
-			// aapt resource value: 0x7f0b009a
-			public const int edit_auth_code_secure = 2131427482;
+			// aapt resource value: 0x7f0b0099
+			public const int edit_auth_code_secure = 2131427481;
 			
 			// aapt resource value: 0x7f0b009e
 			public const int edit_auth_contry = 2131427486;
@@ -2768,9 +2768,6 @@ namespace Project_DB_Tire_Service_Client_Part
 			
 			// aapt resource value: 0x7f0b0018
 			public const int line3 = 2131427352;
-			
-			// aapt resource value: 0x7f0b0099
-			public const int linearLayout1 = 2131427481;
 			
 			// aapt resource value: 0x7f0b0026
 			public const int listMode = 2131427366;
@@ -3008,6 +3005,9 @@ namespace Project_DB_Tire_Service_Client_Part
 			
 			// aapt resource value: 0x7f0b0097
 			public const int text_service_radius = 2131427479;
+			
+			// aapt resource value: 0x7f0b009a
+			public const int text_time_left = 2131427482;
 			
 			// aapt resource value: 0x7f0b0014
 			public const int textinput_counter = 2131427348;

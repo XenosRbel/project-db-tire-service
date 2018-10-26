@@ -22,11 +22,6 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
         private View _view;
         private string[] countryArray;
 
-        public override void OnActivityCreated(Bundle savedInstanceState)
-        {
-            base.OnActivityCreated(savedInstanceState);
-        }
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             _view = inflater.Inflate(Resource.Layout.auth_fragment_countyList, container, false);
@@ -52,6 +47,8 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             var preferences = new AppPreferences(this._view.Context);
 
             preferences.SaveAccessKey(PreferenceField.PREFERENCE_COUNTNTRY_DATA, countryArray[position]);
+
+            this.FragmentManager.PopBackStack();
         }
 
         private void Toolbar_NavigationOnClick(object sender, EventArgs e)

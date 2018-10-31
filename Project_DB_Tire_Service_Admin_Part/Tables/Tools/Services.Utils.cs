@@ -1,6 +1,7 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -13,19 +14,19 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Services : EntityAbstract
     {
-        public Services()
+        public Services() : base()
         {
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
-        public List<T> Load<T>() where T : Services, new()
+        public List<Services> Load()
         {
             connection.Close();
+
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(SelectTable(), connection);
-            var customersData = new List<T>();
+            var command = new SqlCommand(SelectTable(), connection);
+            var customersData = new List<Services>();
 
             command.Transaction = transaction;
             try
@@ -34,28 +35,22 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 while (reader.Read())
                 {
-                    T obj = new T();
-                    var img = (byte[])reader["photoDetails"];
-                    obj.IdServices = reader.GetInt32(0);
-                    obj.NameService = reader.GetString(1);
-                    obj.Radius = reader.GetInt32(2);
-                    obj.Price = reader.GetFloat(3);
-                    obj.PhotoDetails = ConvertBinToImage((byte[])reader["photoDetails"]);
+                    var obj = new Services();
 
-                    byte[] buffer = new byte[reader.GetBytes(reader.GetOrdinal("photoDetails"), 0, null, 0, int.MaxValue)];
+                    obj.IdServices = Convert.ToInt32(reader[0]);
+                    obj.NameService = Convert.ToString(reader[1]);
+                    obj.Radius = Convert.ToInt32(reader[2]);
+                    obj.Price = Convert.ToSingle(reader[3]);
+                    obj.PhotoDetails = ConvertBinToImage((byte[])reader["photoDetails"]);
 
                     customersData.Add(obj);
                 }
-
-                connection.Close();
-                connection.Open();
+                reader.Close();
 
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                connection.Close();
-                connection.Open();
                 transaction.Rollback();
             }
 
@@ -65,7 +60,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Insert()
         {
-            var cmd = new MySqlCommand(InsertData());
+            var cmd = new SqlCommand(InsertData());
 
             cmd.Parameters.AddWithValue("@nameService", this.NameService);
             cmd.Parameters.AddWithValue("@radius", this.Radius);
@@ -77,7 +72,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Delete()
         {
-            var cmd = new MySqlCommand(DeleteData());
+            var cmd = new SqlCommand(DeleteData());
             cmd.Parameters.AddWithValue("@idServices", this.IdServices);
 
             ExecuteNonQuery(cmd);
@@ -88,8 +83,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(UpdateData(), connection);
-            var adapter = new MySqlDataAdapter();
+            var command = new SqlCommand(UpdateData(), connection);
+            var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
 
@@ -116,22 +111,22 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string SelectTable()
         {
-            return "SELECT idServices, nameService, radius, price, photoDetails FROM services;";
+            return "SELECT idServices, nameService, radius, price, photoDetails FROM Services;";
         }
 
         string InsertData()
         {
-            return "call Add_Services(@nameService, @radius, @price, @photoDetails);";
+            return "exec Add_Services @nameService, @radius, @price, @photoDetails;";
         }
 
         string DeleteData()
         {
-            return "DELETE FROM services WHERE (idServices = (@idServices));";
+            return "DELETE FROM Services WHERE (idServices = (@idServices));";
         }
 
         string UpdateData()
         {
-            return "UPDATE services SET nameService = @nameService, radius = @radius, price = @price, photoDetails = @photoDetails WHERE (idServices = @idServices);";
+            return "UPDATE Services SET nameService = @nameService, radius = @radius, price = @price, photoDetails = @photoDetails WHERE (idServices = @idServices);";
         }
 
         #region Serialize
@@ -145,7 +140,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                     writer.Write(this.NameService);
                     writer.Write(this.Radius);
                     writer.Write(this.Price);
-                    writer.Write(BitmapImageToByte(this.PhotoDetails));
+                   // writer.Write(BitmapImageToByte(this.PhotoDetails));
                 }
                 return m.ToArray();
             }
@@ -163,7 +158,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                     obj.NameService = reader.ReadString();
                     obj.Radius = reader.ReadByte();
                     obj.Price = (float)reader.ReadDecimal();
-                    obj.PhotoDetails = ConvertBinToImage(reader.ReadBytes(byte.MaxValue));
+                   // obj.PhotoDetails = ConvertBinToImage(reader.ReadBytes(byte.MaxValue));
                 }
             }
             return obj;

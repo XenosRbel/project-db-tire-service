@@ -37,6 +37,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             GridRefresh();
             textPrice.PreviewTextInput += TextPrice_PreviewTextInput;
             servicesTable.PreviewKeyDown += ServicesTable_PreviewKeyDown;
+            cmbRadius.Items.Add(1);
         }
 
         private void ServicesTable_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -65,7 +66,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                data = new Services().Load<Services>();
+                data = new Services().Load();
             });
 
             servicesTable.ItemsSource = data;

@@ -74,7 +74,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
         private void AuthSuccessHandler()
         {
             new AppPreferences(this._view.Context).SaveAccessKey(PreferenceField.PREFERENCE_AUTH_SSUCCESS, true);
-
+            _timer.Stop();
             Intent intent = new Intent(this.Activity, typeof(MainAppActivity));
                 StartActivity(intent);
         }

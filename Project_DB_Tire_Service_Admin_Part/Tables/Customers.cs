@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +8,14 @@ using Project_DB_Tire_Service_Admin_Part.Entity.Validate;
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     [Serializable]
-    partial class Customers
+    partial class Customers : EntityAbstract
     {
-        public Customers(int iD, string fIO, string phoneNumber, string email)
+        public Customers(int iD, string fIO, string phoneNumber, string email) : base()
         {
             IdCustomer = iD;
             FioC = fIO;
             Phone = phoneNumber;
             Email = email;
-
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
         public int IdCustomer { set; get; }

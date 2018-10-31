@@ -39,9 +39,12 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
  
                     return true;
-                case Resource.Id.navigation_dashboard:
-
-                    return true;
+                case Resource.Id.navigation_services:
+                {
+                    new FragmentUtil(this, this.SupportFragmentManager)
+                        .CreateLoadView(Resource.Id.fragment_main_container, new ServicesFragment());
+                        return true;
+                }
                 case Resource.Id.navigation_notifications:
 
                     return true;

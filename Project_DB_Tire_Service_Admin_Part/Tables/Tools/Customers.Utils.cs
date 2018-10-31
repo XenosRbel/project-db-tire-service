@@ -1,7 +1,7 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,42 +11,16 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Customers : EntityAbstract
     {
-        public Customers()
+        public Customers() : base()
         {
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
-        }
-
-        public DataTable CustomersAdapter() {
-            connection.Open();
-
-            var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(SelectCustomersTable(), connection);
-            var adapter = new MySqlDataAdapter(command);
-            var dataTable = new DataTable();
-
-            command.Transaction = transaction;
-            try
-            {
-                adapter.Fill(dataTable);
-                transaction.Commit();
-            }
-            catch (Exception)
-            {
-                transaction.Rollback();
-            }
-
-            connection.Close();
-
-            return dataTable;
         }
 
         public List<Customers> Load()
         {
-            connection.Close();
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(SelectCustomersTable(), connection);
+            var command = new SqlCommand(SelectCustomersTable(), connection);
             var customersData = new List<Customers>();
 
             command.Transaction = transaction;
@@ -65,8 +39,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                             )
                         );
                 }
-                connection.Close();
-                connection.Open();
+                reader.Close();
                 transaction.Commit();
 
             }
@@ -82,8 +55,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(DeleteCustomerData(), connection);
-            var adapter = new MySqlDataAdapter();
+            var command = new SqlCommand(DeleteCustomerData(), connection);
+            var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
 
@@ -108,8 +81,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(UpdateCustomerData(), connection);
-            var adapter = new MySqlDataAdapter();
+            var command = new SqlCommand(UpdateCustomerData(), connection);
+            var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
 
@@ -135,7 +108,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Insert()
         {
-            var cmd = new MySqlCommand(InsertCustomerData());
+            var cmd = new SqlCommand(InsertCustomerData());
 
             cmd.Parameters.AddWithValue("@fioC", this.FioC);
             cmd.Parameters.AddWithValue("@phone", this.Phone);
@@ -150,24 +123,15 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
         }
 
         string InsertCustomerData() {
-            return "call Add_Customers(@fioC, @phone, @email);"; 
+            return "exec Add_Customers @fioC, @phone, @email;"; 
         }
 
         string DeleteCustomerData() {
-            return "DELETE FROM customers WHERE (idCustomer = (@idCustomer));";
+            return "DELETE FROM Customers WHERE (idCustomer = (@idCustomer));";
         }
 
         string UpdateCustomerData() {
-            return "UPDATE customers SET fioC = @fioC, phone = @phone, email = @email WHERE (idCustomer = @idCustomer);";
-        }
-
-        private MySqlDataAdapter InsertCustomersAdapter(Customers customers) {
-            var command = new MySqlCommand(InsertCustomerData(), connection);
-            var adapter = new MySqlDataAdapter();
-            adapter.InsertCommand = command;
-            adapter.InsertCommand.Parameters.AddWithValue("@fioC", customers.FioC);
-
-            return adapter;
+            return "UPDATE Customers SET fioC = @fioC, phone = @phone, email = @email WHERE (idCustomer = @idCustomer);";
         }
 
         public byte[] Serialize()

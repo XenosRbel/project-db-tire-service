@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +9,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
     [Serializable]
     partial class Armor
     {
-        public Armor(int iD, int idCustomers, int iDService, DateTime arrivalDate, DateTime dateExecution, ArmorStatus statusA)
+        public Armor(int iD, int idCustomers, int iDService, DateTime arrivalDate, DateTime dateExecution, ArmorStatus statusA) : base()
         {
             ID = iD;
             IdCustomers = idCustomers;
@@ -18,8 +17,6 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             ArrivalDate = arrivalDate;
             DateExecution = dateExecution;
             StatusA = statusA;
-
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
         public int ID { set; get; }

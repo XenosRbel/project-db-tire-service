@@ -2303,26 +2303,26 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020082
-			public const int avd_hide_password_1 = 2130837634;
-			
 			// aapt resource value: 0x7f020083
-			public const int avd_hide_password_2 = 2130837635;
+			public const int avd_hide_password_1 = 2130837635;
 			
 			// aapt resource value: 0x7f020084
-			public const int avd_hide_password_3 = 2130837636;
+			public const int avd_hide_password_2 = 2130837636;
+			
+			// aapt resource value: 0x7f020085
+			public const int avd_hide_password_3 = 2130837637;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f020085
-			public const int avd_show_password_1 = 2130837637;
-			
 			// aapt resource value: 0x7f020086
-			public const int avd_show_password_2 = 2130837638;
+			public const int avd_show_password_1 = 2130837638;
 			
 			// aapt resource value: 0x7f020087
-			public const int avd_show_password_3 = 2130837639;
+			public const int avd_show_password_2 = 2130837639;
+			
+			// aapt resource value: 0x7f020088
+			public const int avd_show_password_3 = 2130837640;
 			
 			// aapt resource value: 0x7f020055
 			public const int common_full_open_on_phone = 2130837589;
@@ -2415,49 +2415,52 @@ namespace Project_DB_Tire_Service_Client_Part
 			public const int ic_notifications_black_24dp = 2130837618;
 			
 			// aapt resource value: 0x7f020073
-			public const int navigation_empty_icon = 2130837619;
+			public const int ic_services_24dp = 2130837619;
 			
 			// aapt resource value: 0x7f020074
-			public const int notification_action_background = 2130837620;
+			public const int navigation_empty_icon = 2130837620;
 			
 			// aapt resource value: 0x7f020075
-			public const int notification_bg = 2130837621;
+			public const int notification_action_background = 2130837621;
 			
 			// aapt resource value: 0x7f020076
-			public const int notification_bg_low = 2130837622;
+			public const int notification_bg = 2130837622;
 			
 			// aapt resource value: 0x7f020077
-			public const int notification_bg_low_normal = 2130837623;
+			public const int notification_bg_low = 2130837623;
 			
 			// aapt resource value: 0x7f020078
-			public const int notification_bg_low_pressed = 2130837624;
+			public const int notification_bg_low_normal = 2130837624;
 			
 			// aapt resource value: 0x7f020079
-			public const int notification_bg_normal = 2130837625;
+			public const int notification_bg_low_pressed = 2130837625;
 			
 			// aapt resource value: 0x7f02007a
-			public const int notification_bg_normal_pressed = 2130837626;
+			public const int notification_bg_normal = 2130837626;
 			
 			// aapt resource value: 0x7f02007b
-			public const int notification_icon_background = 2130837627;
-			
-			// aapt resource value: 0x7f020080
-			public const int notification_template_icon_bg = 2130837632;
-			
-			// aapt resource value: 0x7f020081
-			public const int notification_template_icon_low_bg = 2130837633;
+			public const int notification_bg_normal_pressed = 2130837627;
 			
 			// aapt resource value: 0x7f02007c
-			public const int notification_tile_bg = 2130837628;
+			public const int notification_icon_background = 2130837628;
+			
+			// aapt resource value: 0x7f020081
+			public const int notification_template_icon_bg = 2130837633;
+			
+			// aapt resource value: 0x7f020082
+			public const int notification_template_icon_low_bg = 2130837634;
 			
 			// aapt resource value: 0x7f02007d
-			public const int notify_panel_notification_icon_bg = 2130837629;
+			public const int notification_tile_bg = 2130837629;
 			
 			// aapt resource value: 0x7f02007e
-			public const int tooltip_frame_dark = 2130837630;
+			public const int notify_panel_notification_icon_bg = 2130837630;
 			
 			// aapt resource value: 0x7f02007f
-			public const int tooltip_frame_light = 2130837631;
+			public const int tooltip_frame_dark = 2130837631;
+			
+			// aapt resource value: 0x7f020080
+			public const int tooltip_frame_light = 2130837632;
 			
 			static Drawable()
 			{
@@ -2796,9 +2799,6 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f0b0030
 			public const int multiply = 2131427376;
 			
-			// aapt resource value: 0x7f0b00c8
-			public const int navigation_dashboard = 2131427528;
-			
 			// aapt resource value: 0x7f0b00a9
 			public const int navigation_header_container = 2131427497;
 			
@@ -2810,6 +2810,9 @@ namespace Project_DB_Tire_Service_Client_Part
 			
 			// aapt resource value: 0x7f0b00c9
 			public const int navigation_notifications = 2131427529;
+			
+			// aapt resource value: 0x7f0b00c8
+			public const int navigation_services = 2131427528;
 			
 			// aapt resource value: 0x7f0b0043
 			public const int never = 2131427395;
@@ -3485,20 +3488,20 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f08002f
 			public const int appbar_scrolling_view_behavior = 2131230767;
 			
-			// aapt resource value: 0x7f08003f
-			public const int auth_additional_description = 2131230783;
-			
 			// aapt resource value: 0x7f080040
-			public const int auth_btn_continue = 2131230784;
+			public const int auth_additional_description = 2131230784;
 			
-			// aapt resource value: 0x7f08003e
-			public const int auth_phone_inp_hint = 2131230782;
+			// aapt resource value: 0x7f080041
+			public const int auth_btn_continue = 2131230785;
 			
-			// aapt resource value: 0x7f08003c
-			public const int auth_titel = 2131230780;
+			// aapt resource value: 0x7f08003f
+			public const int auth_phone_inp_hint = 2131230783;
 			
 			// aapt resource value: 0x7f08003d
-			public const int auth_title_description = 2131230781;
+			public const int auth_titel = 2131230781;
+			
+			// aapt resource value: 0x7f08003e
+			public const int auth_title_description = 2131230782;
 			
 			// aapt resource value: 0x7f080030
 			public const int bottom_sheet_behavior = 2131230768;
@@ -3506,11 +3509,11 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f080031
 			public const int character_counter_pattern = 2131230769;
 			
-			// aapt resource value: 0x7f080042
-			public const int clarifi_question_description_exit = 2131230786;
+			// aapt resource value: 0x7f080043
+			public const int clarifi_question_description_exit = 2131230787;
 			
-			// aapt resource value: 0x7f080041
-			public const int clarifi_question_exit = 2131230785;
+			// aapt resource value: 0x7f080042
+			public const int clarifi_question_exit = 2131230786;
 			
 			// aapt resource value: 0x7f080001
 			public const int common_google_play_services_enable_button = 2131230721;
@@ -3563,11 +3566,11 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f080010
 			public const int common_signin_button_text_long = 2131230736;
 			
-			// aapt resource value: 0x7f080044
-			public const int complete_setup = 2131230788;
+			// aapt resource value: 0x7f080045
+			public const int complete_setup = 2131230789;
 			
-			// aapt resource value: 0x7f080043
-			public const int exit_name_btn = 2131230787;
+			// aapt resource value: 0x7f080044
+			public const int exit_name_btn = 2131230788;
 			
 			// aapt resource value: 0x7f080032
 			public const int password_toggle_content_description = 2131230770;
@@ -3587,26 +3590,26 @@ namespace Project_DB_Tire_Service_Client_Part
 			// aapt resource value: 0x7f080022
 			public const int search_menu_title = 2131230754;
 			
-			// aapt resource value: 0x7f080045
-			public const int secure_code = 2131230789;
-			
-			// aapt resource value: 0x7f080047
-			public const int secure_code_complete = 2131230791;
-			
 			// aapt resource value: 0x7f080046
-			public const int secure_code_description = 2131230790;
+			public const int secure_code = 2131230790;
 			
 			// aapt resource value: 0x7f080048
-			public const int secure_code_error_connection = 2131230792;
+			public const int secure_code_complete = 2131230792;
+			
+			// aapt resource value: 0x7f080047
+			public const int secure_code_description = 2131230791;
 			
 			// aapt resource value: 0x7f080049
-			public const int secure_code_error_input = 2131230793;
+			public const int secure_code_error_connection = 2131230793;
 			
 			// aapt resource value: 0x7f08004a
-			public const int secure_code_question = 2131230794;
+			public const int secure_code_error_input = 2131230794;
 			
 			// aapt resource value: 0x7f08004b
-			public const int secure_code_tip = 2131230795;
+			public const int secure_code_question = 2131230795;
+			
+			// aapt resource value: 0x7f08004c
+			public const int secure_code_tip = 2131230796;
 			
 			// aapt resource value: 0x7f080037
 			public const int status_bar_notification_info_overflow = 2131230775;
@@ -3619,6 +3622,9 @@ namespace Project_DB_Tire_Service_Client_Part
 			
 			// aapt resource value: 0x7f08003b
 			public const int title_notifications = 2131230779;
+			
+			// aapt resource value: 0x7f08003c
+			public const int title_services = 2131230780;
 			
 			static String()
 			{

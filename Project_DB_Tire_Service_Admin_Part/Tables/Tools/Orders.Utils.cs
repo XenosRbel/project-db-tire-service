@@ -1,6 +1,6 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,25 +10,22 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Orders : EntityAbstract
     {
-        public Orders()
-        {
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
+        public Orders() : base() {
         }
 
         public List<T> Load<T>() where T : Orders, new()
         {
-            connection.Close();
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(SelectTable(), connection);
+            var command = new SqlCommand(SelectTable(), connection);
             var customersData = new List<T>();
 
             command.Transaction = transaction;
             try
             {
                 var reader = command.ExecuteReader();
-
+                
                 while (reader.Read())
                 {
                     T obj = new T();
@@ -41,16 +38,12 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                     customersData.Add(obj);
                 }
-
-                connection.Close();
-                connection.Open();
+                reader.Close();
 
                 transaction.Commit();
             }
             catch (Exception)
             {
-                connection.Close();
-                connection.Open();
                 transaction.Rollback();
             }
 
@@ -60,7 +53,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Insert()
         {
-            var cmd = new MySqlCommand(InsertData());
+            var cmd = new SqlCommand(InsertData());
 
             cmd.Parameters.AddWithValue("@idMaster", this.IdMaster);
             cmd.Parameters.AddWithValue("@orderDate", this.OrderDate);
@@ -76,8 +69,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(DeleteData(), connection);
-            var adapter = new MySqlDataAdapter();
+            var command = new SqlCommand(DeleteData(), connection);
+            var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
 
@@ -103,8 +96,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(UpdateData(), connection);
-            var adapter = new MySqlDataAdapter();
+            var command = new SqlCommand(UpdateData(), connection);
+            var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
 
@@ -137,30 +130,19 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string InsertData()
         {
-            return "call Add_Orders(@idMaster, @orderDate, @idServices, @idCustomer, @countO);";
+            return "exec Add_Orders @idMaster, @orderDate, @idServices, @idCustomer, @countO;";
         }
 
         string DeleteData()
         {
-            return "DELETE FROM orders WHERE (idOrder = (@idOrder));";
+            return "DELETE FROM Orders WHERE (idOrder = (@idOrder));";
         }
 
         string UpdateData()
         {
-            return "UPDATE orders SET " +
+            return "UPDATE Orders SET " +
                 "idMaster = @idMaster, orderDate = @orderDate, idServices = @idServices, idCustomer = @idCustomer, countO = @countO" +
                 " WHERE (idOrder = @idOrder);";
-        }
-
-        private MySqlDataAdapter InsertAdapter(Services customers)
-        {
-            var command = new MySqlCommand(InsertData(), connection);
-            var adapter = new MySqlDataAdapter();
-
-            adapter.InsertCommand = command;
-            adapter.InsertCommand.Parameters.AddWithValue("@nameService", customers.NameService);
-
-            return adapter;
         }
 
         public byte[] Serialize()

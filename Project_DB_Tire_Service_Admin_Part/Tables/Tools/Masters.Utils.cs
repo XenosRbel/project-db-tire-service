@@ -1,29 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     partial class Masters : EntityAbstract
     {
-        public Masters()
+        public Masters() : base()
         {
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
         public List<T> Load<T>() where T : Masters, new()
         {
-            connection.Close();
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(SelectTable(), connection);
+            var command = new SqlCommand(SelectTable(), connection);
             var customersData = new List<T>();
 
             command.Transaction = transaction;
@@ -41,16 +39,12 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                     customersData.Add(obj);
                 }
-
-                connection.Close();
-                connection.Open();
+                reader.Close();
 
                 transaction.Commit();
             }
             catch (Exception)
             {
-                connection.Close();
-                connection.Open();
                 transaction.Rollback();
             }
 
@@ -60,7 +54,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Insert()
         {
-            var cmd = new MySqlCommand(InsertData());
+            var cmd = new SqlCommand(InsertData());
 
             cmd.Parameters.AddWithValue("@fioM", this.FIO);
             cmd.Parameters.AddWithValue("@spec", this.Specialization);
@@ -71,7 +65,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Delete()
         {
-            var cmd = new MySqlCommand(DeleteData());
+            var cmd = new SqlCommand(DeleteData());
             cmd.Parameters.AddWithValue("@idMaster", ID);
 
             ExecuteNonQuery(cmd);
@@ -82,8 +76,8 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             connection.Open();
 
             var transaction = connection.BeginTransaction();
-            var command = new MySqlCommand(UpdateData(), connection);
-            var adapter = new MySqlDataAdapter();
+            var command = new SqlCommand(UpdateData(), connection);
+            var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
 
@@ -109,22 +103,22 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         string SelectTable()
         {
-            return "SELECT idMaster, fioM, specialization, phone FROM masters;";
+            return "SELECT idMaster, fioM, specialization, phone FROM Masters;";
         }
 
         string InsertData()
         {
-            return "call Add_Masters(@fioM, @spec, @phone);";
+            return "exec Add_Masters @fioM, @spec, @phone;";
         }
 
         string DeleteData()
         {
-            return "DELETE FROM masters WHERE (idMaster = (@idMaster));";
+            return "DELETE FROM Masters WHERE (idMaster = (@idMaster));";
         }
 
         string UpdateData()
         {
-            return "UPDATE masters SET fioM = @fioM, phone = @phone, email = @email WHERE (idMaster = @idMaster);";
+            return "UPDATE Masters SET fioM = @fioM, phone = @phone, email = @email WHERE (idMaster = @idMaster);";
         }
 
         public byte[] Serialize()

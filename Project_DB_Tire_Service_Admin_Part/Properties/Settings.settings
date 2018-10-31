@@ -5,10 +5,9 @@
     <Setting Name="dbConnectionS" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;User Id=pavel;Password=Pavel1998;Host=localhost;Database=autoservice;Persist Security Info=True&lt;/ConnectionString&gt;
-  &lt;ProviderName /&gt;
+  &lt;ConnectionString&gt;User Id=pavel;Password=pavel1998;Port=3307;Host=192.168.0.88;Database=Autoservice;Persist Security Info=True; SslMode=none;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">User Id=pavel;Password=Pavel1998;Host=localhost;Database=autoservice;Persist Security Info=True</Value>
+      <Value Profile="(Default)">User Id=pavel;Password=pavel1998;Port=3307;Host=192.168.0.88;Database=Autoservice;Persist Security Info=True; SslMode=none;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

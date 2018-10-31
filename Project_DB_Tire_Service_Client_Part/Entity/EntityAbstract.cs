@@ -1,35 +1,39 @@
-﻿using System.Data.SqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Project_DB_Tire_Service_Client_Part.Entity
 {
     abstract class EntityAbstract
     {
         [NonSerialized]
-        public SqlConnection connection;
+        public MySqlConnection connection;
 
         public EntityAbstract()
         {
-            SqlConnectionStringBuilder Builder = new SqlConnectionStringBuilder
+            MySqlConnectionStringBuilder Builder = new MySqlConnectionStringBuilder
             {
-                DataSource = "piron.database.windows.net",
-                InitialCatalog = "Autocervice",
-                PersistSecurityInfo = false,
-                UserID = "piron_app",
-                Password = "Pavel9684997",
-                MultipleActiveResultSets = false,
-                Encrypt = false,
-                ConnectTimeout = 30
+                Server = "192.168.0.12",
+                Database = "Autoservice",
+                UserID = "pavel",
+                Password = "pavel1998",
+                Port = 3306,
+                ConnectionTimeout = 30,
+                SqlServerMode = false,
             };
 
-            connection = new SqlConnection(Builder.ToString()/*new Properties.Settings().dbConnectionS*/);
+            connection = new MySqlConnection(Builder.ToString());
         }
 
-        public virtual async void ExecuteNonQuery(SqlCommand command)
+        public virtual async void ExecuteNonQuery(MySqlCommand command)
         {
             connection.Open();
 
@@ -50,6 +54,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             }
         }
 
+        public virtual object Select() {return null;}
         public virtual void Insert() { }
         public virtual void Update() { }
         public virtual void Delete() { }

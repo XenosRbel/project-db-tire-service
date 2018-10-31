@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 namespace Project_DB_Tire_Service_Admin_Part.Tables
 {
     [Serializable]
-    partial class Orders
+    partial class Orders : EntityAbstract
     {
-        public Orders(int iD, string idMaster, string idServices, string idCustomer, DateTime orderDate, int countO)
+        public Orders(int iD, string idMaster, string idServices, string idCustomer, DateTime orderDate, int countO) : base()
         {
             ID = iD;
             IdMaster = idMaster;
@@ -18,8 +17,6 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
             IdCustomer = idCustomer;
             OrderDate = orderDate;
             CountO = countO;
-
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
         public int ID { set; get; }

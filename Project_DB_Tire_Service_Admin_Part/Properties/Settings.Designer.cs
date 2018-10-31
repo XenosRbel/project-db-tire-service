@@ -26,23 +26,11 @@ namespace Project_DB_Tire_Service_Admin_Part.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("User Id=pavel;Password=Pavel1998;Host=localhost;Database=autoservice;Persist Secu" +
-            "rity Info=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("User Id=pavel;Password=pavel1998;Port=3307;Host=192.168.0.88;Database=Autoservice" +
+            ";Persist Security Info=True; SslMode=none;")]
         public string dbConnectionS {
             get {
                 return ((string)(this["dbConnectionS"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Параметр {
-            get {
-                return ((string)(this["Параметр"]));
-            }
-            set {
-                this["Параметр"] = value;
             }
         }
     }

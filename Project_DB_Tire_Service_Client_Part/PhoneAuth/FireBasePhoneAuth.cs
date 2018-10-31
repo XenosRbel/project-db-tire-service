@@ -79,6 +79,11 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
             Auth.SignInWithCredential(credential).AddOnCompleteListener(Activity, this);
         }
 
+        public void SignOut()
+        {
+            Auth.SignOut();
+        }
+
         public void VerifyPhoneNumberWithCode(string verificationId, string code)
         {
             if (verificationId != null)

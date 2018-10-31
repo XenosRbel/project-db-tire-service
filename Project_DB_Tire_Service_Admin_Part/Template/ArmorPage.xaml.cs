@@ -72,7 +72,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                serv = new Services().Load<Services>();
+                serv = new Services().Load();
                 
             });
 

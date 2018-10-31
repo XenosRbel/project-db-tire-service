@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,14 +10,12 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
     [Serializable]
     partial class Masters : EntityAbstract
     {
-        public Masters(int iD, string fIO, string specialization, string phone)
+        public Masters(int iD, string fIO, string specialization, string phone) : base()
         {
             ID = iD;
             FIO = fIO;
             Specialization = specialization;
             Phone = phone;
-
-            connection = new MySqlConnection(new Properties.Settings().dbConnectionS);
         }
 
         public int ID { set; get; }

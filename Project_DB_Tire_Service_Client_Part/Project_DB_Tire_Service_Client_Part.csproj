@@ -79,6 +79,7 @@
     <Compile Include="Activities\ExitDialogFragment.cs" />
     <Compile Include="Activities\MainAppActivity.cs" />
     <Compile Include="Activities\ServicesFragment.cs" />
+    <Compile Include="Adapters\ServicesListAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneAuth\FireBasePhoneAuth.cs" />
     <Compile Include="PhoneAuth\IPhoneAuthCallbacks.cs" />
@@ -176,7 +177,9 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Adapters\" />
+    <AndroidResource Include="Resources\layout\item_service.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\auth_fragment_confirm_code.axml">
@@ -197,15 +200,15 @@
     <AndroidResource Include="Resources\drawable\ic_services_24dp.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Autoservice_Core\Autoservice_Core.csproj">
-      <Project>{5B6FE8B6-1B09-429A-9521-ABD2664EC295}</Project>
-      <Name>Autoservice_Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\item_info_services.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Autoservice_Core\Autoservice_Core.csproj">
+      <Project>{7b6f5263-4ee3-4247-84d5-7504b5172e3d}</Project>
+      <Name>Autoservice_Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

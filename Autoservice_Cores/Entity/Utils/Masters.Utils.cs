@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Autoservice_Core.Entity
 {
-    public partial class Services : EntityAbstract
+    public partial class Masters : EntityAbstract
     {
-        public Services() : base()
+        public Masters() : base()
         {
         }
 
@@ -23,7 +23,7 @@ namespace Autoservice_Core.Entity
 
             var transaction = Connection.BeginTransaction();
             var command = new SqlCommand(SelectTable(), Connection);
-            var customersData = new List<Services>();
+            var customersData = new List<Masters>();
 
             command.Transaction = transaction;
             try
@@ -32,14 +32,12 @@ namespace Autoservice_Core.Entity
 
                 while (reader.Read())
                 {
-                    var obj = new Services
-                    {
-                        IdServices = Convert.ToInt32(reader[0]),
-                        NameService = Convert.ToString(reader[1]),
-                        Radius = Convert.ToInt32(reader[2]),
-                        Price = Convert.ToSingle(reader[3]),
-                        ImageBytes = (byte[])reader[4]
-                    };
+                    var obj = new Masters();
+
+                    obj.ID = Convert.ToInt32(reader[0]);
+                    obj.FIO = Convert.ToString(reader[1]);
+                    obj.Specialization = Convert.ToString(reader[2]);
+                    obj.Phone = Convert.ToString(reader[3]);
 
                     customersData.Add(obj);
                 }
@@ -61,10 +59,9 @@ namespace Autoservice_Core.Entity
         {
             var cmd = new SqlCommand(InsertData());
 
-            cmd.Parameters.AddWithValue("@nameService", this.NameService);
-            cmd.Parameters.AddWithValue("@radius", this.Radius);
-            cmd.Parameters.AddWithValue("@price", this.Price);
-            cmd.Parameters.AddWithValue("@photoDetails", this.ImageBytes);
+            cmd.Parameters.AddWithValue("@fioM", this.FIO);
+            cmd.Parameters.AddWithValue("@spec", this.Specialization);
+            cmd.Parameters.AddWithValue("@phone", this.Phone);
 
             ExecuteNonQuery(cmd);
         }
@@ -72,7 +69,7 @@ namespace Autoservice_Core.Entity
         public override void Delete()
         {
             var cmd = new SqlCommand(DeleteData());
-            cmd.Parameters.AddWithValue("@idServices", this.IdServices);
+            cmd.Parameters.AddWithValue("@idMaster", ID);
 
             ExecuteNonQuery(cmd);
         }
@@ -90,11 +87,10 @@ namespace Autoservice_Core.Entity
             try
             {
                 adapter.UpdateCommand = command;
-                adapter.UpdateCommand.Parameters.AddWithValue("@idServices", this.IdServices);
-                adapter.UpdateCommand.Parameters.AddWithValue("@nameService", this.NameService);
-                adapter.UpdateCommand.Parameters.AddWithValue("@radius", this.Radius);
-                adapter.UpdateCommand.Parameters.AddWithValue("@price", this.Price);
-                adapter.UpdateCommand.Parameters.AddWithValue("@photoDetails", this.ImageBytes);
+                adapter.UpdateCommand.Parameters.AddWithValue("@idMaster", this.ID);
+                adapter.UpdateCommand.Parameters.AddWithValue("@fioM", this.FIO);
+                adapter.UpdateCommand.Parameters.AddWithValue("@specialization", this.Specialization);
+                adapter.UpdateCommand.Parameters.AddWithValue("@phone", this.Phone);
 
                 adapter.UpdateCommand.ExecuteNonQuery();
 
@@ -111,42 +107,40 @@ namespace Autoservice_Core.Entity
 
         string SelectTable()
         {
-            return "SELECT idServices, nameService, radius, price, photoDetails FROM Services;";
+            return "SELECT idMaster, fioM, specialization, phone FROM Masters;";
         }
 
         string InsertData()
         {
-            return "exec Add_Services @nameService, @radius, @price, @photoDetails;";
+            return "exec Add_Masters @fioM, @spec, @phone;";
         }
 
         string DeleteData()
         {
-            return "DELETE FROM Services WHERE (idServices = (@idServices));";
+            return "DELETE FROM Masters WHERE (idMaster = (@idMaster));";
         }
 
         string UpdateData()
         {
-            return "UPDATE Services SET nameService = @nameService, radius = @radius, price = @price, photoDetails = @photoDetails WHERE (idServices = @idServices);";
+            return "UPDATE Masters SET fioM = @fioM, phone = @phone, email = @email WHERE (idMaster = @idMaster);";
         }
 
-        #region Serialize
         public byte[] Serialize()
         {
             using (MemoryStream m = new MemoryStream())
             {
                 using (BinaryWriter writer = new BinaryWriter(m))
                 {
-                    writer.Write(this.IdServices);
-                    writer.Write(this.NameService);
-                    writer.Write(this.Radius);
-                    writer.Write(this.Price);
-                   // writer.Write(BitmapImageToByte(this.PhotoDetails));
+                    writer.Write(this.ID);
+                    writer.Write(this.FIO);
+                    writer.Write(this.Specialization);
+                    writer.Write(this.Phone);
                 }
                 return m.ToArray();
             }
         }
 
-        public static T Desserialize<T>(byte[] data) where T : Services, new()
+        public static T Desserialize<T>(byte[] data) where T : Masters, new()
         {
             T obj = new T();
 
@@ -154,16 +148,13 @@ namespace Autoservice_Core.Entity
             {
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    obj.IdServices = reader.ReadInt32();
-                    obj.NameService = reader.ReadString();
-                    obj.Radius = reader.ReadByte();
-                    obj.Price = (float)reader.ReadDecimal();
-                   // obj.PhotoDetails = ConvertBinToImage(reader.ReadBytes(byte.MaxValue));
+                    obj.ID = reader.ReadInt32();
+                    obj.FIO = reader.ReadString();
+                    obj.Specialization = reader.ReadString();
+                    obj.Phone = reader.ReadString();
                 }
             }
             return obj;
         }
-        #endregion
-
     }
 }

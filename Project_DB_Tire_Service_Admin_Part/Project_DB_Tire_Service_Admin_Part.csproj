@@ -173,12 +173,6 @@
     <Resource Include="Assets\Images\mountains.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Autoservice_Core\Autoservice_Core.csproj">
-      <Project>{5b6fe8b6-1b09-429a-9521-abd2664ec295}</Project>
-      <Name>Autoservice_Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\error_no_image.png" />
   </ItemGroup>
   <ItemGroup>
@@ -192,6 +186,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Autoservice_Core\Autoservice_Core.csproj">
+      <Project>{7b6f5263-4ee3-4247-84d5-7504b5172e3d}</Project>
+      <Name>Autoservice_Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

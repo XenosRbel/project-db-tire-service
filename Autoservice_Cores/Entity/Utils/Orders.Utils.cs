@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace Autoservice_Core.Entity
 {
-    public partial class Services : EntityAbstract
+    public partial class Orders : EntityAbstract
     {
-        public Services() : base()
-        {
+        public Orders() : base() {
         }
 
         public override object Select()
@@ -23,23 +20,22 @@ namespace Autoservice_Core.Entity
 
             var transaction = Connection.BeginTransaction();
             var command = new SqlCommand(SelectTable(), Connection);
-            var customersData = new List<Services>();
+            var customersData = new List<Orders>();
 
             command.Transaction = transaction;
             try
             {
                 var reader = command.ExecuteReader();
-
+                
                 while (reader.Read())
                 {
-                    var obj = new Services
-                    {
-                        IdServices = Convert.ToInt32(reader[0]),
-                        NameService = Convert.ToString(reader[1]),
-                        Radius = Convert.ToInt32(reader[2]),
-                        Price = Convert.ToSingle(reader[3]),
-                        ImageBytes = (byte[])reader[4]
-                    };
+                    var obj = new Orders();
+                    obj.ID = Convert.ToInt32(reader[0]);
+                    obj.IdMaster = Convert.ToString(reader[1]);
+                    obj.OrderDate = Convert.ToDateTime(reader[4]);
+                    obj.IdServices = Convert.ToString(reader[2]);
+                    obj.IdCustomer = Convert.ToString(reader[3]);
+                    obj.CountO = Convert.ToInt32(reader[5]);
 
                     customersData.Add(obj);
                 }
@@ -61,10 +57,11 @@ namespace Autoservice_Core.Entity
         {
             var cmd = new SqlCommand(InsertData());
 
-            cmd.Parameters.AddWithValue("@nameService", this.NameService);
-            cmd.Parameters.AddWithValue("@radius", this.Radius);
-            cmd.Parameters.AddWithValue("@price", this.Price);
-            cmd.Parameters.AddWithValue("@photoDetails", this.ImageBytes);
+            cmd.Parameters.AddWithValue("@idMaster", this.IdMaster);
+            cmd.Parameters.AddWithValue("@orderDate", this.OrderDate);
+            cmd.Parameters.AddWithValue("@idServices", this.IdServices);
+            cmd.Parameters.AddWithValue("@idCustomer", this.IdCustomer);
+            cmd.Parameters.AddWithValue("@countO", this.CountO);
 
             ExecuteNonQuery(cmd);
         }
@@ -72,7 +69,7 @@ namespace Autoservice_Core.Entity
         public override void Delete()
         {
             var cmd = new SqlCommand(DeleteData());
-            cmd.Parameters.AddWithValue("@idServices", this.IdServices);
+            cmd.Parameters.AddWithValue("@idOrder", ID);
 
             ExecuteNonQuery(cmd);
         }
@@ -90,11 +87,12 @@ namespace Autoservice_Core.Entity
             try
             {
                 adapter.UpdateCommand = command;
+                adapter.UpdateCommand.Parameters.AddWithValue("@idOrder", this.ID);
+                adapter.UpdateCommand.Parameters.AddWithValue("@idMaster", this.IdMaster);
+                adapter.UpdateCommand.Parameters.AddWithValue("@orderDate", this.OrderDate);
                 adapter.UpdateCommand.Parameters.AddWithValue("@idServices", this.IdServices);
-                adapter.UpdateCommand.Parameters.AddWithValue("@nameService", this.NameService);
-                adapter.UpdateCommand.Parameters.AddWithValue("@radius", this.Radius);
-                adapter.UpdateCommand.Parameters.AddWithValue("@price", this.Price);
-                adapter.UpdateCommand.Parameters.AddWithValue("@photoDetails", this.ImageBytes);
+                adapter.UpdateCommand.Parameters.AddWithValue("@idCustomer", this.IdCustomer);
+                adapter.UpdateCommand.Parameters.AddWithValue("@countO", this.CountO);
 
                 adapter.UpdateCommand.ExecuteNonQuery();
 
@@ -111,42 +109,44 @@ namespace Autoservice_Core.Entity
 
         string SelectTable()
         {
-            return "SELECT idServices, nameService, radius, price, photoDetails FROM Services;";
+            return "select idOrder, fioM, nameService, fioC, orderDate, countO from SelectOrder;";
         }
 
         string InsertData()
         {
-            return "exec Add_Services @nameService, @radius, @price, @photoDetails;";
+            return "exec Add_Orders @idMaster, @orderDate, @idServices, @idCustomer, @countO;";
         }
 
         string DeleteData()
         {
-            return "DELETE FROM Services WHERE (idServices = (@idServices));";
+            return "DELETE FROM Orders WHERE (idOrder = (@idOrder));";
         }
 
         string UpdateData()
         {
-            return "UPDATE Services SET nameService = @nameService, radius = @radius, price = @price, photoDetails = @photoDetails WHERE (idServices = @idServices);";
+            return "UPDATE Orders SET " +
+                "idMaster = @idMaster, orderDate = @orderDate, idServices = @idServices, idCustomer = @idCustomer, countO = @countO" +
+                " WHERE (idOrder = @idOrder);";
         }
 
-        #region Serialize
         public byte[] Serialize()
         {
             using (MemoryStream m = new MemoryStream())
             {
                 using (BinaryWriter writer = new BinaryWriter(m))
                 {
+                    writer.Write(this.ID);
+                    writer.Write(this.IdMaster);
+                    writer.Write(this.OrderDate.ToBinary());
                     writer.Write(this.IdServices);
-                    writer.Write(this.NameService);
-                    writer.Write(this.Radius);
-                    writer.Write(this.Price);
-                   // writer.Write(BitmapImageToByte(this.PhotoDetails));
+                    writer.Write(this.IdCustomer);
+                    writer.Write(this.CountO);
                 }
                 return m.ToArray();
             }
         }
 
-        public static T Desserialize<T>(byte[] data) where T : Services, new()
+        public static T Desserialize<T>(byte[] data) where T : Orders, new()
         {
             T obj = new T();
 
@@ -154,16 +154,15 @@ namespace Autoservice_Core.Entity
             {
                 using (BinaryReader reader = new BinaryReader(stream))
                 {
-                    obj.IdServices = reader.ReadInt32();
-                    obj.NameService = reader.ReadString();
-                    obj.Radius = reader.ReadByte();
-                    obj.Price = (float)reader.ReadDecimal();
-                   // obj.PhotoDetails = ConvertBinToImage(reader.ReadBytes(byte.MaxValue));
+                    obj.ID = reader.ReadInt32();
+                    obj.IdMaster = reader.ReadString();
+                    obj.OrderDate = DateTime.FromBinary(reader.ReadInt64());
+                    obj.IdServices = reader.ReadString();
+                    obj.IdCustomer = reader.ReadString();
+                    obj.CountO = reader.ReadInt32();
                 }
             }
             return obj;
         }
-        #endregion
-
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Autoservice_Core.Entity.Utils
 {
-    enum ArmorStatus : byte
+    public enum ArmorStatus : byte
     {
         Open,
         Closed,

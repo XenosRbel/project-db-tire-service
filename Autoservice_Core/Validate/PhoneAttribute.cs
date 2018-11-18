@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using PhoneNumbers;
 
-namespace Project_DB_Tire_Service_Admin_Part.Entity.Validate
+namespace Autoservice_Core.Validate
 {
-    class PhoneAttribute : ValidationAttribute
+    internal class PhoneAttribute : ValidationAttribute
     {
         public PhoneAttribute()
         {

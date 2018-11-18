@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Autoservice_Core.Entity
 {
     [Serializable]
-    partial class Orders : EntityAbstract
+    public partial class Orders : EntityAbstract
     {
         public Orders(int iD, string idMaster, string idServices, string idCustomer, DateTime orderDate, int countO) : base()
         {

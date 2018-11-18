@@ -45,9 +45,6 @@ namespace Project_DB_Tire_Service_Client_Part
 
             new FragmentUtil(this, this.SupportFragmentManager)
                 .CreateLoadView(Resource.Id.parent_fragment_container, new AuthFragment());
-            
-            //BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_menu);
-            //navigation.SetOnNavigationItemSelectedListener(this);
         }
         public override void OnBackPressed()
         {            
@@ -66,27 +63,6 @@ namespace Project_DB_Tire_Service_Client_Part
                 this.SupportFragmentManager.PopBackStack();
             }
         }
-
-        //public bool OnNavigationItemSelected(IMenuItem item)
-        //{
-        //    switch (item.ItemId)
-        //    {
-        //        case Resource.Id.navigation_home:
-
-        //            phoneAuth.IsPlayServicesAvailable();
-        //            phoneAuth.VerifyPhoneNumberWithCode(phoneAuth.MCallbacks.mVerificationId, "123456");
-        //            return true;
-        //        case Resource.Id.navigation_dashboard:
-
-        //            phoneAuth.StartPhoneNumberVerification("+375293452225");
-        //            return true;
-        //        case Resource.Id.navigation_notifications:
-
-        //            phoneAuth.ResendVerificationCode("+375293452225", phoneAuth.MCallbacks.mResendToken);
-        //            return true;
-        //    }
-        //    return false;
-        //}
     }
 }
 

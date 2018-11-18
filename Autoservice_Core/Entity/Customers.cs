@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Project_DB_Tire_Service_Admin_Part.Entity.Validate;
+using Autoservice_Core.Validate;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Autoservice_Core.Entity
 {
     [Serializable]
-    partial class Customers : EntityAbstract
+    public partial class Customers : EntityAbstract
     {
         public Customers(int iD, string fIO, string phoneNumber, string email) : base()
         {

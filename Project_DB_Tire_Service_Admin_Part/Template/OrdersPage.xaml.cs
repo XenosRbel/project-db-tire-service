@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Project_DB_Tire_Service_Admin_Part.Tables;
+using Autoservice_Core.Entity;
 
 namespace Project_DB_Tire_Service_Admin_Part.Template
 {
@@ -79,9 +72,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         {
             List<Customers> customer = new List<Customers>();
 
-            await Task.Run(() => {
-                customer = new Customers().Load();                
-            });
+            await Task.Run(() => { customer = (List<Customers>) new Customers().Select(); });
 
             for (int i = 0; i < customer.Count; i++)
             {
@@ -95,7 +86,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                serv = new Services().Load();
+                serv = (List<Services>)new Services().Select();
             });
 
 
@@ -111,7 +102,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                master = new Masters().Load<Masters>();
+                master = (List<Masters>)new Masters().Select();
             });
 
 
@@ -127,7 +118,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                data = new Orders().Load<Orders>();
+                data = (List<Orders>)new Orders().Select();
             });
 
             ordersTable.ItemsSource = data;

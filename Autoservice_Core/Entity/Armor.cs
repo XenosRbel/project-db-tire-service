@@ -2,24 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Autoservice_Core.Entity.Utils;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-
-namespace Project_DB_Tire_Service_Client_Part.Entity
+namespace Autoservice_Core.Entity
 {
     [Serializable]
-    partial class Armor : EntityAbstract
+    public partial class Armor : EntityAbstract
     {
-        public Armor() : base()
-        {
-            
-        }
-
         public int IdArmor { set; get; }
         public DateTime ArrivalDate { set; get; }
         public DateTime DateExecution { set; get; }

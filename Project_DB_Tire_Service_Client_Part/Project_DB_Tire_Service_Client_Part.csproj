@@ -79,13 +79,6 @@
     <Compile Include="Activities\ExitDialogFragment.cs" />
     <Compile Include="Activities\MainAppActivity.cs" />
     <Compile Include="Activities\ServicesFragment.cs" />
-    <Compile Include="Entity\Armor.cs" />
-    <Compile Include="Entity\ArmorStatus.cs" />
-    <Compile Include="Entity\EntityAbstract.cs" />
-    <Compile Include="Entity\Orders.cs" />
-    <Compile Include="Entity\Services.cs" />
-    <Compile Include="Entity\Utils\Armor.cs" />
-    <Compile Include="Entity\Utils\Services.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneAuth\FireBasePhoneAuth.cs" />
     <Compile Include="PhoneAuth\IPhoneAuthCallbacks.cs" />
@@ -136,13 +129,22 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MySql.Data">
-      <Version>8.0.13</Version>
-    </PackageReference>
     <PackageReference Include="System.Data.SqlClient">
       <Version>4.5.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Compat">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Android.Support.Fragment">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v4">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Auth">
       <Version>60.1142.1</Version>
     </PackageReference>
@@ -193,6 +195,17 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_services_24dp.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Autoservice_Core\Autoservice_Core.csproj">
+      <Project>{5B6FE8B6-1B09-429A-9521-ABD2664EC295}</Project>
+      <Name>Autoservice_Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\item_info_services.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

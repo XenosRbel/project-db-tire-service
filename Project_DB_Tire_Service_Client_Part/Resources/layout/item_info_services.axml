@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<ImageView
+		android:src="@android:drawable/ic_menu_gallery"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/image_service_photo" />
+	<TextView
+		android:text="@string/services_txt_description"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:layout_marginLeft="10dp" />
+	<TextView
+		android:text="Описание: "
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/text_service_descript"
+		android:layout_marginTop="10dp" 
+		android:layout_marginLeft="16dp"/>
+	<TextView
+        android:text="@string/services_txt_r"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+		android:layout_marginTop="16dp" 
+		android:layout_marginLeft="10dp"/>
+	<TextView
+		android:text="Радиус "
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/text_service_radius"
+		android:layout_marginTop="10dp" 
+		android:layout_marginLeft="16dp"/>
+	<TextView
+        android:text="@string/services_txt_price"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+		android:layout_marginTop="16dp" 
+		android:layout_marginLeft="10dp"/>
+	<TextView
+		android:text="Цена: "
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/text_service_price" 
+		android:layout_marginTop="10dp" 
+		android:layout_marginLeft="16dp"/>
+
+</LinearLayout>

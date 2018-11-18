@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Project_DB_Tire_Service_Admin_Part.Tables;
+using Autoservice_Core.Entity;
+using Project_DB_Tire_Service_Admin_Part.Entity;
 
 namespace Project_DB_Tire_Service_Admin_Part.Template
 {
@@ -44,7 +35,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         {
             if (e.Key == Key.Delete)
             {
-                (servicesTable.SelectedItem as Services)?.Delete();
+                (servicesTable.SelectedItem as ServicesWrapper)?.Delete();
             }
             if (e.Key == Key.F5)
             {
@@ -62,12 +53,9 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
         private async void GridRefresh()
         {
-            List<Services> data = new List<Services>();
+            List<ServicesWrapper> data = new List<ServicesWrapper>();
 
-            await Task.Run(() =>
-            {
-                data = new Services().Load();
-            });
+            await Task.Run(() => { data = new ServicesWrapper().Wrapper(); });
 
             servicesTable.ItemsSource = data;
             servicesTable.Items.Refresh();
@@ -83,12 +71,19 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
             new Services()
             {
                 NameService = this.textService.Text,
-                SImage = img,
+                ImageBytes = ImageToByteArray(img),
                 Price = Convert.ToInt32(this.textPrice.Text),
                 Radius = Convert.ToByte(this.cmbRadius.SelectedItem)
             }.Insert();
 
             GridRefresh();
+        }
+
+        public byte[] ImageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
         }
 
         private System.Drawing.Image GetImage()
@@ -112,7 +107,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
         private void btnDelServicesRec_Click(object sender, RoutedEventArgs e)
         {
-            (servicesTable.SelectedItem as Services)?.Delete();
+            (servicesTable.SelectedItem as ServicesWrapper)?.Delete();
             GridRefresh();
         }
 

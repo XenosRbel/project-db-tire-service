@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows;
 
-namespace Project_DB_Tire_Service_Admin_Part.Entity.Validate
+namespace Autoservice_Core.Validate
 {
-    class EmailAttribute : ValidationAttribute
+    internal class EmailAttribute : ValidationAttribute
     {
         public EmailAttribute()
         {

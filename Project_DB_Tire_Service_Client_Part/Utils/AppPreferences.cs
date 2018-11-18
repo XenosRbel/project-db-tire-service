@@ -10,6 +10,7 @@ using Android.Preferences;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using System.Diagnostics;
 
 namespace Project_DB_Tire_Service_Client_Part.Utils
 {
@@ -71,6 +72,7 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
             catch (Exception e)
             {
                 ClearAccessKey();
+                System.Diagnostics.Debug.Print(e.Message);
                 return null;
             }
         }

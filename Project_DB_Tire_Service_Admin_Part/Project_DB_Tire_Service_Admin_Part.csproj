@@ -93,20 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Entity\Validate\EmailAttribut.cs" />
-    <Compile Include="Entity\Validate\PhoneAttribute.cs" />
-    <Compile Include="Tables\Armor.cs" />
-    <Compile Include="Tables\Customers.cs" />
-    <Compile Include="Tables\EntityAbstract.cs" />
-    <Compile Include="Tables\Masters.cs" />
-    <Compile Include="Tables\Orders.cs" />
-    <Compile Include="Tables\Services.cs" />
-    <Compile Include="Tables\Tools\Armor.Utils.cs" />
-    <Compile Include="Tables\Tools\ArmorStatus.cs" />
-    <Compile Include="Tables\Tools\Customers.Utils.cs" />
-    <Compile Include="Tables\Tools\Masters.Utils.cs" />
-    <Compile Include="Tables\Tools\Orders.Utils.cs" />
-    <Compile Include="Tables\Tools\Services.Utils.cs" />
+    <Compile Include="Entity\ServicesWrapper.cs" />
     <Compile Include="Template\ArmorPage.xaml.cs">
       <DependentUpon>ArmorPage.xaml</DependentUpon>
     </Compile>
@@ -185,7 +172,12 @@
   <ItemGroup>
     <Resource Include="Assets\Images\mountains.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Autoservice_Core\Autoservice_Core.csproj">
+      <Project>{5b6fe8b6-1b09-429a-9521-abd2664ec295}</Project>
+      <Name>Autoservice_Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\error_no_image.png" />
   </ItemGroup>

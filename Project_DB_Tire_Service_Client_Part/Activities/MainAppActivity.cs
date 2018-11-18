@@ -36,9 +36,9 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             switch (item.ItemId)
             {
                 case Resource.Id.navigation_home:
-
- 
+                {
                     return true;
+                }
                 case Resource.Id.navigation_services:
                 {
                     new FragmentUtil(this, this.SupportFragmentManager)
@@ -46,8 +46,9 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
                         return true;
                 }
                 case Resource.Id.navigation_notifications:
-
+                {
                     return true;
+                }
             }
             return false;
         }

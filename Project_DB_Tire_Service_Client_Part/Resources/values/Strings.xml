@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Project_DB_Tire_Service_Client_Part</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+  <string name="app_name">Project_DB_Tire_Service_Client_Part</string>
+  <string name="title_home">Home</string>
+  <string name="title_dashboard">Dashboard</string>
+  <string name="title_notifications">Notifications</string>
   <string name="title_services">Услуги</string>
 
   <string name="auth_titel">Подтвердите номер телефона</string>
@@ -23,4 +23,8 @@
   <string name="secure_code_error_input">Неверный код подтверждения.</string>
   <string name="secure_code_question">Не получили код?</string>
   <string name="secure_code_tip">Подождите</string>
+
+  <string name="services_txt_description">Описание</string>
+  <string name="services_txt_r">Радиус</string>
+  <string name="services_txt_price">Цена</string>
 </resources>

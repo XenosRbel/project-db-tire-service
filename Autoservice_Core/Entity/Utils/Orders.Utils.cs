@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Autoservice_Core.Entity
 {
-    partial class Orders : EntityAbstract
+    public partial class Orders : EntityAbstract
     {
         public Orders() : base() {
         }
 
-        public List<T> Load<T>() where T : Orders, new()
+        public override object Select()
         {
-            connection.Open();
+            Connection.Open();
 
-            var transaction = connection.BeginTransaction();
-            var command = new SqlCommand(SelectTable(), connection);
-            var customersData = new List<T>();
+            var transaction = Connection.BeginTransaction();
+            var command = new SqlCommand(SelectTable(), Connection);
+            var customersData = new List<Orders>();
 
             command.Transaction = transaction;
             try
@@ -28,13 +29,13 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                 
                 while (reader.Read())
                 {
-                    T obj = new T();
-                    obj.ID = reader.GetInt32(0);
-                    obj.IdMaster = reader.GetString(1);
-                    obj.OrderDate = reader.GetDateTime(4);
-                    obj.IdServices = reader.GetString(2);
-                    obj.IdCustomer = reader.GetString(4);
-                    obj.CountO = reader.GetInt32(5);
+                    var obj = new Orders();
+                    obj.ID = Convert.ToInt32(reader[0]);
+                    obj.IdMaster = Convert.ToString(reader[1]);
+                    obj.OrderDate = Convert.ToDateTime(reader[4]);
+                    obj.IdServices = Convert.ToString(reader[2]);
+                    obj.IdCustomer = Convert.ToString(reader[3]);
+                    obj.CountO = Convert.ToInt32(reader[5]);
 
                     customersData.Add(obj);
                 }
@@ -42,12 +43,13 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
+                Debug.Print(e.Message);
             }
 
-            connection.Close();
+            Connection.Close();
             return customersData;
         }
 
@@ -66,37 +68,18 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Delete()
         {
-            connection.Open();
+            var cmd = new SqlCommand(DeleteData());
+            cmd.Parameters.AddWithValue("@idOrder", ID);
 
-            var transaction = connection.BeginTransaction();
-            var command = new SqlCommand(DeleteData(), connection);
-            var adapter = new SqlDataAdapter();
-
-            command.Transaction = transaction;
-
-            try
-            {
-                adapter.DeleteCommand = command;
-                adapter.DeleteCommand.Parameters.AddWithValue("@idOrder", ID);
-
-                adapter.DeleteCommand.ExecuteNonQuery();
-
-                transaction.Commit();
-            }
-            catch (Exception)
-            {
-                transaction.Rollback();
-            }
-
-            connection.Close();
+            ExecuteNonQuery(cmd);
         }
 
         public override void Update()
         {
-            connection.Open();
+            Connection.Open();
 
-            var transaction = connection.BeginTransaction();
-            var command = new SqlCommand(UpdateData(), connection);
+            var transaction = Connection.BeginTransaction();
+            var command = new SqlCommand(UpdateData(), Connection);
             var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
@@ -115,12 +98,13 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
+                Debug.Print(e.Message);
             }
 
-            connection.Close();
+            Connection.Close();
         }
 
         string SelectTable()

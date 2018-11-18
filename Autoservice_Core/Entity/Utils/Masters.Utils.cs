@@ -2,27 +2,28 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Autoservice_Core.Entity
 {
-    partial class Masters : EntityAbstract
+    public partial class Masters : EntityAbstract
     {
         public Masters() : base()
         {
         }
 
-        public List<T> Load<T>() where T : Masters, new()
+        public override object Select()
         {
-            connection.Open();
+            Connection.Open();
 
-            var transaction = connection.BeginTransaction();
-            var command = new SqlCommand(SelectTable(), connection);
-            var customersData = new List<T>();
+            var transaction = Connection.BeginTransaction();
+            var command = new SqlCommand(SelectTable(), Connection);
+            var customersData = new List<Masters>();
 
             command.Transaction = transaction;
             try
@@ -31,11 +32,12 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 while (reader.Read())
                 {
-                    T obj = new T();
-                    obj.ID = reader.GetInt32(0);
-                    obj.FIO = reader.GetString(1);
-                    obj.Specialization = reader.GetString(2);
-                    obj.Phone = reader.GetString(3);
+                    var obj = new Masters();
+
+                    obj.ID = Convert.ToInt32(reader[0]);
+                    obj.FIO = Convert.ToString(reader[1]);
+                    obj.Specialization = Convert.ToString(reader[2]);
+                    obj.Phone = Convert.ToString(reader[3]);
 
                     customersData.Add(obj);
                 }
@@ -43,12 +45,13 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
+                Debug.Print(e.Message);
             }
 
-            connection.Close();
+            Connection.Close();
             return customersData;
         }
 
@@ -73,10 +76,10 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
         public override void Update()
         {
-            connection.Open();
+            Connection.Open();
 
-            var transaction = connection.BeginTransaction();
-            var command = new SqlCommand(UpdateData(), connection);
+            var transaction = Connection.BeginTransaction();
+            var command = new SqlCommand(UpdateData(), Connection);
             var adapter = new SqlDataAdapter();
 
             command.Transaction = transaction;
@@ -93,12 +96,13 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
 
                 transaction.Commit();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
+                Debug.Print(e.Message);
             }
 
-            connection.Close();
+            Connection.Close();
         }
 
         string SelectTable()

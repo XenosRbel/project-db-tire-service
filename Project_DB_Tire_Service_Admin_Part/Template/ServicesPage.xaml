@@ -24,7 +24,7 @@
                     <DataGridTemplateColumn Header="Фото" Width="80*" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Height="auto" StretchDirection="DownOnly" Source="{Binding PhotoDetails}" />
+                                <Image Height="auto" StretchDirection="DownOnly" Source="{Binding ServicesImage}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Project_DB_Tire_Service_Admin_Part.Tables;
+using Autoservice_Core.Entity;
+using Autoservice_Core.Entity.Utils;
 
 namespace Project_DB_Tire_Service_Admin_Part.Template
 {
@@ -57,7 +58,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                 customer = new Customers().Load();                
+                 customer = (List<Customers>)new Customers().Select();                
             });
 
             for (int i = 0; i < customer.Count; i++)
@@ -72,7 +73,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
 
             await Task.Run(() =>
             {
-                serv = new Services().Load();
+                serv = (List<Services>)new Services().Select();
                 
             });
 
@@ -100,10 +101,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
         {
             List<Armor> data = new List<Armor>();
 
-            await Task.Run(() =>
-            {
-                data = new Armor().Load<Armor>();
-            });
+            await Task.Run(() => { data = (List<Armor>)new Armor().Select(); });
 
             armorTable.ItemsSource = data;
             armorTable.Items.Refresh();
@@ -152,7 +150,7 @@ namespace Project_DB_Tire_Service_Admin_Part.Template
                 ArrivalDate = dateArrival.SelectedDate.Value,
                 DateExecution = dateExecute.SelectedDate.Value,
                 Customer = cmbCustomers.SelectedItem.ToString(),
-                Service = cmbServices.SelectedItem.ToString(),
+                NameService = cmbServices.SelectedItem.ToString(),
                 StatusA = statusValue
             }.Insert();
 

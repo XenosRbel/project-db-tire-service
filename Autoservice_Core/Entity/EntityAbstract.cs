@@ -5,16 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project_DB_Tire_Service_Admin_Part.Tables
+namespace Autoservice_Core.Entity
 {
-    abstract class EntityAbstract
+    public abstract class EntityAbstract
     {
-        [NonSerialized]
-        public SqlConnection connection;
+        public SqlConnection Connection { get; set; }
+
+        public SqlConnectionStringBuilder Builder { get; set; }
 
         public EntityAbstract()
         {
-            SqlConnectionStringBuilder Builder = new SqlConnectionStringBuilder
+            Builder = new SqlConnectionStringBuilder
             {
                 DataSource = "piron.database.windows.net",
                 InitialCatalog = "Autocervice",
@@ -26,30 +27,31 @@ namespace Project_DB_Tire_Service_Admin_Part.Tables
                 ConnectTimeout = 30
             };
 
-            connection = new SqlConnection(Builder.ToString()/*new Properties.Settings().dbConnectionS*/);
+            Connection = new SqlConnection(Builder.ToString()/*new Properties.Settings().dbConnectionS*/);
         }
 
         public virtual async void ExecuteNonQuery(SqlCommand command)
         {
-            connection.Open();
+            Connection.Open();
 
-            var transaction = connection.BeginTransaction();
-            command.Connection = connection;
+            var transaction = Connection.BeginTransaction();
+            command.Connection = Connection;
             command.Transaction = transaction;
 
             try
             {
                 await command.ExecuteNonQueryAsync();
                 transaction.Commit();
-                connection.Close();
+                Connection.Close();
             }
             catch (Exception)
             {
                 transaction.Rollback();
-                connection.Close();
+                Connection.Close();
             }
         }
 
+        public virtual object Select() { return null; }
         public virtual void Insert() { }
         public virtual void Update() { }
         public virtual void Delete() { }

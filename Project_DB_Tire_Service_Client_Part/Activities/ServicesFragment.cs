@@ -14,6 +14,9 @@ using Android.Widget;
 using Autoservice_Core.Entity;
 using Java.IO;
 using Project_DB_Tire_Service_Client_Part.Adapters;
+using Project_DB_Tire_Service_Client_Part.Utils;
+using Console = System.Console;
+using Debug = System.Diagnostics.Debug;
 
 namespace Project_DB_Tire_Service_Client_Part.Activities
 {
@@ -27,7 +30,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your fragment here
+            this._services = new List<Services>();
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -52,20 +55,40 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
         private async void SetDataToDapter()
         {
-
-            this.Activity.RunOnUiThread(() =>
+            await Task.Run((() =>
             {
-                _services = (List<Services>)new Services().Select();
-                _listView.Adapter = new ServicesListAdapter(this.Activity, _services);
+                this.Activity.RunOnUiThread(() =>
+                {
+                    try
+                    {
+                        _services = (List<Services>)new Services().Select();
+                    }
+                    catch (Exception e)
+                    {
+                        Toast.MakeText(this.Context, $"{Resources.GetString(Resource.String.sql_select_data_faild)}", ToastLength.Short).Show();
 
-            });
+                        Debug.Print($"Class name:{this.GetType().Name}\n Exception:{e.Message}\n Method:{e.StackTrace}");
+                    }
+                    _listView.Adapter = new ServicesListAdapter(this.Activity, _services);
+                });
+            }));
         }
 
         void OnListItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             var listView = sender as ListView;
-            var t = _services[e.Position];
-            
+            var bundle = new  Bundle();
+            var serializeDarBytes = _services[e.Position].Serialize();
+
+            Debug.Assert(serializeDarBytes != null, nameof(serializeDarBytes) + " != null");
+
+            bundle.PutByteArray("SELECTED_ITEM", serializeDarBytes);
+            bundle.PutByteArray("SELECTED_ITEM_IMAGE", _services[e.Position].ImageBytes);
+
+            var fragment = new ServiceItemFragment {Arguments = bundle};
+
+            new FragmentUtil(this.Activity, this.Activity.SupportFragmentManager)
+                .CreateLoadView(Resource.Id.fragment_main_container, fragment);
         }
     }
 }

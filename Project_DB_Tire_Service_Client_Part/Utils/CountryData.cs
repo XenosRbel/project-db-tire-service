@@ -37,16 +37,9 @@ namespace Project_DB_Tire_Service_Client_Part.Utils
 
         public Dictionary<string, string> GetCountryDictonary()
         {
-            var data = new Dictionary<string, string>();
             var country = GetCountryData();
 
-            for (int i = 0; i < country.Length; i++)
-            {
-                var item = country[i].Split('\t');
-                data.Add(item[0], item[1]);
-            }
-
-            return data;
+            return country.Select(t => t.Split('\t')).ToDictionary(item => item[0], item => item[1]);
         }
     }
 }

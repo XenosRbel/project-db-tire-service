@@ -43,7 +43,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
                 {
                     new FragmentUtil(this, this.SupportFragmentManager)
                         .CreateLoadView(Resource.Id.fragment_main_container, new ServicesFragment());
-                        return true;
+                    return true;
                 }
                 case Resource.Id.navigation_notifications:
                 {
@@ -52,5 +52,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             }
             return false;
         }
+
+        //public override void OnBackPressed() { }
     }
 }

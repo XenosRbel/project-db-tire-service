@@ -46,7 +46,7 @@ namespace Autoservice_Core.Entity
             catch (Exception e)
             {
                 transaction.Rollback();
-                Debug.Print(e.Message);
+                Debug.Print($"Class name:{this.GetType().Name}\n Exception:{e.Message}\n Method:{e.StackTrace}");
             }
 
             Connection.Close();
@@ -101,7 +101,7 @@ namespace Autoservice_Core.Entity
             catch (Exception e)
             {
                 transaction.Rollback();
-                Debug.Print(e.Message);
+                Debug.Print($"Class name:{this.GetType().Name}\n Exception:{e.Message}\n Method:{e.StackTrace}");
             }
 
             Connection.Close();

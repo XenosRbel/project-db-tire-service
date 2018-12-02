@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -140,15 +142,15 @@ namespace Autoservice_Core.Entity
                     writer.Write(this.NameService);
                     writer.Write(this.Radius);
                     writer.Write(this.Price);
-                   // writer.Write(BitmapImageToByte(this.PhotoDetails));
+                    writer.Write(this.ImageBytes);
                 }
                 return m.ToArray();
             }
         }
 
-        public static T Desserialize<T>(byte[] data) where T : Services, new()
+        public static Services Desserialize(byte[] data)
         {
-            T obj = new T();
+            var obj = new Services();
 
             using (MemoryStream stream = new MemoryStream(data))
             {
@@ -157,8 +159,9 @@ namespace Autoservice_Core.Entity
                     obj.IdServices = reader.ReadInt32();
                     obj.NameService = reader.ReadString();
                     obj.Radius = reader.ReadByte();
-                    obj.Price = (float)reader.ReadDecimal();
-                   // obj.PhotoDetails = ConvertBinToImage(reader.ReadBytes(byte.MaxValue));
+                    obj.Price = reader.ReadSingle();
+                    obj.ImageBytes = reader.ReadBytes(byte.MaxValue);
+                    // obj.PhotoDetails = ConvertBinToImage(reader.ReadBytes(byte.MaxValue));
                 }
             }
             return obj;

@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,10 +45,11 @@ namespace Autoservice_Core.Entity
                 transaction.Commit();
                 Connection.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 transaction.Rollback();
                 Connection.Close();
+                Debug.Print($"Class name:{this.GetType().Name}\n Exception:{e.Message}\n Method:{e.StackTrace}");
             }
         }
 

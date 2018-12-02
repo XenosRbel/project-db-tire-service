@@ -44,6 +44,7 @@
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n>West;Other</MandroidI18n>
+    <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -78,7 +79,9 @@
     <Compile Include="Activities\AuthFragment.cs" />
     <Compile Include="Activities\ExitDialogFragment.cs" />
     <Compile Include="Activities\MainAppActivity.cs" />
+    <Compile Include="Activities\ServiceItemFragment.cs" />
     <Compile Include="Activities\ServicesFragment.cs" />
+    <Compile Include="Activities\SplashActivity.cs" />
     <Compile Include="Adapters\ServicesListAdapter.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="PhoneAuth\FireBasePhoneAuth.cs" />
@@ -146,6 +149,9 @@
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
       <Version>27.0.2.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Vector.Drawable">
+      <Version>27.0.2.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Auth">
       <Version>60.1142.1</Version>
     </PackageReference>
@@ -209,6 +215,15 @@
       <Project>{7b6f5263-4ee3-4247-84d5-7504b5172e3d}</Project>
       <Name>Autoservice_Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_screen.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\baseline_exit_to_app_24px.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

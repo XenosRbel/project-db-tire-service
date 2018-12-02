@@ -22,7 +22,7 @@ using System;
 
 namespace Project_DB_Tire_Service_Client_Part
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme")]
     class MainActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

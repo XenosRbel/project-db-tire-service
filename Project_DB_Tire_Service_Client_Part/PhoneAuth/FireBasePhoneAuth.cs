@@ -41,8 +41,8 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
         public void InitFirebaseAuth()
         {
             var options = new FirebaseOptions.Builder()
-               .SetApplicationId("bitcoin-simulator-175509")
-               .SetApiKey("AIzaSyAVW03GBXJ489Hb1pKFOR73b0JhbfDWN8M")
+               .SetApplicationId(Activity.Resources.GetString(Resource.String.firebase_app_id))
+               .SetApiKey(Activity.Resources.GetString(Resource.String.firebase_api_key))
                .Build();
 
             if (App == null)
@@ -101,12 +101,12 @@ namespace Project_DB_Tire_Service_Client_Part.PhoneAuth
                 FirebaseUser user = Auth.CurrentUser;
 
                 OnAuthSuccessful?.Invoke();
-                Toast.MakeText(Activity, "Authentication Successful.", ToastLength.Short).Show();
+                Toast.MakeText(Activity, $"{Activity.Resources.GetString(Resource.String.firebase_auth_successful)}", ToastLength.Short).Show();
             }
             else
             {
                 OnAuthFailed?.Invoke();
-                Toast.MakeText(Activity, "Authentication failed.", ToastLength.Short).Show();
+                Toast.MakeText(Activity, $"{Activity.Resources.GetString(Resource.String.firebase_auth_faild)}", ToastLength.Short).Show();
             }
         }
 

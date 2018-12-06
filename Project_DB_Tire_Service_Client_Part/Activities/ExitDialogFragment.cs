@@ -29,13 +29,13 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             var btnExit = _view.FindViewById<Button>(Resource.Id.btn_exit_app);
             btnExit.Click += BtnExit_Click;
 
-            var btnComplite = _view.FindViewById<Button>(Resource.Id.btn_complete);
-            btnComplite.Click += BtnComplite_Click; ;
+            var btnComplete = _view.FindViewById<Button>(Resource.Id.btn_complete);
+            btnComplete.Click += BtnComplete_Click; ;
 
             return _view;
         }
 
-        private void BtnComplite_Click(object sender, EventArgs e)
+        private void BtnComplete_Click(object sender, EventArgs e)
         {
             this.Dismiss();
         }

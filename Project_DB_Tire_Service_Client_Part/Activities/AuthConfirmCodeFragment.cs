@@ -30,18 +30,17 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
             InitFireBaseAuth();
 
             Bundle bundle = Arguments;
-            if (bundle != null)
-            {
-                string phoneNumber = bundle.GetString("phoneNumber");
+            if (bundle == null) return;
 
-                _phoneAuth.StartPhoneNumberVerification(phoneNumber);
+            string phoneNumber = bundle.GetString("phoneNumber");
 
-                _timer = new System.Timers.Timer(1000);
+            _phoneAuth.StartPhoneNumberVerification(phoneNumber);
 
-                StartTimerAuth();
+            _timer = new System.Timers.Timer(1000);
 
-                _phoneAuth.OnAuthSuccessful += () => AuthSuccessHandler();
-            }
+            StartTimerAuth();
+
+            _phoneAuth.OnAuthSuccessful += AuthSuccessHandler;
         }
 
         private void StartTimerAuth()

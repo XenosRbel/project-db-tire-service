@@ -20,7 +20,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
     public class AuthCountryFragment : Android.Support.V4.App.Fragment
     {
         private View _view;
-        private string[] countryArray;
+        private string[] _countryArray;
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -34,9 +34,9 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
 
             var listOfCountry = _view.FindViewById<ListViewCompat>(Resource.Id.list_view_country);
 
-            countryArray = new CountryData(this.Activity).GetCountryData();
+            _countryArray = new CountryData(this.Activity).GetCountryData();
 
-            listOfCountry.Adapter = new ArrayAdapter<string>(_view.Context, Resource.Layout.item_country, countryArray);
+            listOfCountry.Adapter = new ArrayAdapter<string>(_view.Context, Resource.Layout.item_country, _countryArray);
             listOfCountry.ItemClick += (sender, e) => PushCountryData(e.Position);
 
             return _view;
@@ -46,7 +46,7 @@ namespace Project_DB_Tire_Service_Client_Part.Activities
         {
             var preferences = new AppPreferences(this._view.Context);
 
-            preferences.SaveAccessKey(PreferenceField.PREFERENCE_COUNTNTRY_DATA, countryArray[position]);
+            preferences.SaveAccessKey(PreferenceField.PREFERENCE_COUNTNTRY_DATA, _countryArray[position]);
 
             this.FragmentManager.PopBackStack();
         }
